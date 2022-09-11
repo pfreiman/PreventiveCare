@@ -1,7 +1,7 @@
 // Text for Preventive care module -- each topic has a "Text" (general discussion) and a "Rec" (individualized specific recommendation).
 
 
-// test changes for commit using remote 
+// undo test changes for commit using remote 
 
 const pcIntroduction = "Welcome! By completing this form and answering a few questions, you’ve taken an important first step towards improving your health and protecting yourself from cardiovascular disease.  The information and recommendations presented below are all  evidence-based and validated.  Hopefully, they will provide useful guideposts on your journey to healthier living."
 const pcRiskAssessmentText = "Assessment of ASCVD risk is the foundation of primary prevention. For those aged 20-39 years, it is reasonable to measure traditional risk factors every 4-6 years to identify major factors (e.g., tobacco, dyslipidemia, family history of premature ASCVD, chronic inflammatory diseases, hypertension, or type 2 diabetes mellitus [T2DM]) that provide rationale for optimizing lifestyle and tracking risk factor progression and need for treatment.";
