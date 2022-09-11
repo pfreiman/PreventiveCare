@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/preventiveCareCSS.css">
+        <script src = "js/jsScripts.js" defer ></script>
+        <script src="js/constants.js" defer></script>
+        <script src = "js/functions.js" defer></script>
+        <script src = "js/textFiles.js" defer></script>
+        <title>Preventive Care Questionaire</title>
+</head>
+<body>
+
+<form id="entryForm">
+<h1>Cardiovascular Risk Assessment Questionnaire</h1>
+
+<p>Thank you for your interest in participating in the Cardiovascular Risk Assessment Clinic!  This important step will help identify risk factors that can lead to cardiovascular disease, especially heart attack and stroke.  
+All recommendations will be based on the best current scientific evidence.  Our goal is to provide you with an evaluation of risk factors that can cause serious medical events and provide a roadmap to beneficial habits and a path toward healthy living.</p>
+
+<p>First, we need to find out a few things about you…</p>
+
+<p>
+<label for="name">Name:</label>
+<input type="text" id="name" name="name" ></input>
+<br>
+
+<br>
+<label for="dob">Date of birth:</label>
+<input type='date' id='dob' name='dob' ></input>
+<br>
+</p>
+
+<br>
+<hr>
+<br>
+
+<p>Briefly, describe your goals.  What would you like to get out of today’s visit?</p>
+
+<input type="text" name="goals"></input>
+
+
+<h2>General information:</h2>
+
+<p><label for="age">What is your age?</label>
+        <input type="number" id="age" name="Age:"></input>
+    </p>
+<br>
+
+<p>Gender:</p>
+
+<input type="radio" id="male" name="Gender:" value="Male">
+<label for="male">Male</label><br>
+<input type="radio" id="female" name="Gender:" value="Female">
+<label for="female">Female</label><br>
+<br>
+
+<p>Race/Ethnicity:</p>
+
+<input type="radio" id="white" name="Race:" value="White">
+<label for="white">White</label><br>
+<input type="radio" id="africanAmerican" name="Race:" value="African American">
+<label for="africanAmerican">African-American</label><br>
+<input type="radio" id="otherRacial" name="Race:" value="Other">
+<label for="otherRacial">Other racial background</label><br>
+<br>
+
+<h2>Physical activity</h2>
+
+<p>How many minutes of exercise do you get in a typical week?</p>
+
+<input type="radio" id="none" name="exercise" value="None">
+<label for="none">None</label><br>
+<input type="radio" id="<150" name="exercise" value="<150 minutes of moderate physical activity">
+<label for="<150">1-150 minutes of moderate physical activity</label><br>
+<input type="radio" id=">75" name="exercise" value=">75 minutes of vigorous physical activity">
+<label for=">75">More than 75 minutes of vigorous physical activity</label><br>
+<input type="radio" id=">150" name="exercise" value=">150 minutes of moderate physical activity">
+<label for=">150">More than 150 minutes of moderate physical activity</label><br>
+<br>
+
+
+<h2>Nutrition</h2>
+
+<p><label for="mealNumber">How many meals do you eat each day?</label>
+        <input type="number" id="mealNumber" name="mealNumber"></input></p>
+
+<p><label for="snackNumber">How many times a day do you have snacks?</label>
+        <input type="number" id="snackNumber" name="snackNumber"></input></p>
+
+<p>How many times a week do you eat:</p>
+
+<p><label for="redMeatNumber">Beef or pork</label>
+        <input type="number" id="redMeatNumber" name="redMeatNumber"></input></p>
+
+<p><label for="whiteMeatNumber">Chicken or turkey</label>
+        <input type="number" id="whiteMeatNumber" name="whiteMeatNumber"></input></p>
+
+<p><label for="seafoodNumber">Fish or shellfish</label>
+        <input type="number" id="seafoodNumber" name="seafoodNumber"></input></p>
+
+<p><label for="vegetableProteinNumber">Vegetable-based protein</label>
+        <input type="number" id="vegetableProteinNumber" name="vegetableProteinNumber"></input></p>
+
+<p><label for="eatOutNumber">How many times a week do you eat out or order take-out?</label>
+        <input type="number" id="eatOutNumber" name="eatOutNumber"></input></p>
+
+<p><label for="fruitNumber">How many servings of fruit or fruit juice do you consume each day?</label>
+        <input type="number" id="fruitNumber" name="fruitNumber"></input></p>
+
+<p><label for="vegetableNumber">How may servings of vegetables or vegetable juice do you consume each day?</label>
+        <input type="number" id="vegetableNumber" name="vegetableNumber"></input></p>
+
+<p><label for="legumesNumber">How many servings of legumes (dried peas or beans like garbanzo, split peas, lentils, etc.) do you consume per week?</label>
+        <input type="number" id="legumesNumber" name="legumesNumber"></input></p>
+
+
+
+
+
+<p>What types of drinks do you prefer?   (check all that apply)</p>
+
+<input type="checkbox" class="beverageChoices" id="sugaredDrinks" name="sugaredDrinks" value="Sugared Drinks">
+<label for="sugaredDrinks"> Soda or non-carbonated drinks, sugared</label><br>
+<input type="checkbox" class="beverageChoices" id="artificiallySweetenedDrinks" name="artificiallySweetenedDrinks" value="Artificially Sweetened Drinks">
+<label for="artificiallySweetenedDrinks"> Soda or non-carbonated drinks, artificially sweetened</label><br>
+<input type="checkbox" class="beverageChoices" id="unsweetenedDrinks" name="unsweetenedDrinks" value="Unsweetened Flavored Drinks">
+<label for="unsweetenedDrinks"> Unsweetened flavored drinks</label><br>
+<input type="checkbox" class="beverageChoices" id="vegetableJuice" name="vegetableJuice" value="Vegetable Juice">
+<label for="vegetableJuice"> Vegetable or fruit juice</label><br>
+<input type="checkbox" class="beverageChoices" id="water" name="water" value="Water">
+<label for="water"> Water</label><br>
+<input type="checkbox" class="beverageChoices" id="unsweetTea" name="unsweetTea" value="Unsweetened Ice Tea">
+<label for="unsweetTea"> Iced Tea, unsweetened</label><br>
+<input type="checkbox" class="beverageChoices" id="sweetTea" name="sweetTea" value="Sweetened Ice Tea">
+<label for="sweetTea"> Iced Tea, sweetened</label><br>
+<input type="checkbox" class="beverageChoices" id="milk" name="milk" value="Milk">
+<label for="milk"> Milk</label><br>
+<input type="checkbox" class="beverageChoices" id="otherDrinks" name="otherDrinks" value="Other Drinks">
+<label for="otherDrinks"> Other</label><br>
+
+
+
+
+<h2>Weight management</h2> 
+
+<p><label for="weight">Enter weight (lbs):</label>
+        <input type="number" id="weight" name="Weight (lbs)"></input></p>
+<p><label for="height">Enter height (inches):</label>
+        <input type="number" id="height" name="Height (in)"></input></p>
+<p><label for="waist">Waist circumference (inches):</label>
+        <input type="number" id="waist" name="waist"></input></p>
+    
+
+
+<h2>Blood pressure management</h2>
+
+<p>Are you taking medications for hypertension(High blood pressure)?</p>
+
+<input type="radio" id="yes" name="On HTN Meds?" value="Yes">
+<label for="yes">Yes</label><br>
+<input type="radio" id="no" name="On HTN Meds?" value="No">
+<label for="no">No</label><br>
+
+
+<p>Recent blood pressure range:</p>
+
+<input type="radio" id="SBP<120" name="Recent BP range:" value="<120 systolic">
+<label for="SBP<120">< 120 systolic</label><br>
+<input type="radio" id="SBP120s/80" name="Recent BP range:" value="120-129/<80">
+<label for="SBP120s/80">120-129/<80</label><br>
+<input type="radio" id="SBP130s/80s" name="Recent BP range:"value="130-139/80-89">
+<label for="SBP130s/80s">130-139/80-89</label><br>
+<input type="radio" id=">140" name="Recent BP range:" value="140+/90+">
+<label for=">140">>140/>90</label><br>
+<br>
+
+<p><label for="sbp">Enter recent systolic blood pressure (the top number of blood pressure reading):</label>
+        <input type="number" id="sbp" name="Systolic BP:"></input></p>
+
+
+<p>Do you have Chronic Kidney Disease?</p>
+
+<input type="radio" id="yes" name="CKD present?" value="Yes">
+        <label for="yes">Yes</label></input><br>
+<input type="radio" id="no" name="CKD present?" value="No">
+<label for="no">No</label></input><br>      
+
+
+<h2>Diabetes</h2>
+
+<p>Do you have diabetes?</p>
+
+<input type="radio" id="yes" name="Diabetic?" value="Yes">
+<label for="yes">Yes</label><br>
+<input type="radio" id="no" name="Diabetic?" value="No">
+<label for="no">No</label><br>
+
+
+<p><label for="hga1c">Enter hemoglobin A1C (HgA1C) value, if known:</label>
+        <input type="number" id="hga1c" name="hga1c"></input></p>
+<p><label for="fbs">Enter Fasting Blood Sugar value, if known:</label>
+        <input type="number" id="fbs" name="fbs"></input></p>
+
+
+<p>Do you have a history of coronary, cerebral or other vascular disease?</p>
+
+<input type="radio" id="yes" name="hxVascularDz" value="Yes">
+<label for="yes">Yes</label><br>
+<input type="radio" id="no" name="hxVascularDz" value="No">
+<label for="no">No</label><br>
+
+
+<p>Do you have a history of Congestive Heart Failure?</p>
+
+<input type="radio" id="yes" name="hxCHF" value="Yes">
+<label for="yes">Yes</label><br>
+<input type="radio" id="no" name="hxCHF" value="No">
+<label for="no">No</label><br>
+
+
+
+<h2>Cholesterol management</h2>
+
+
+<p>Enter values for:    (if unknown, leave entry blank)</p>
+
+<p><label for="totalChol">Total cholesterol:</label>
+        <input type="number" id="totalChol" name="Total cholesterol:"></input></p>
+<p><label for="ldlChol">LDL-cholesterol:</label>
+        <input type="number" id="ldlChol" name="LDL-cholesterol:"></input></p>
+<p><label for="hdlChol">HDL-cholesterol:</label>
+        <input type="number" id="hdlChol" name="HDL-cholesterol:"></input></p>
+<p><label for="trigs">Triglycerides:</label>
+        <input type="number" id="trigs" name="Triglycerides:"></input></p>
+
+<p>Have you ever had a coronary calcium score?</p>
+
+<input type="radio" id="yes" name="hxCACScore" value="Yes">
+<label for="yes">Yes</label><br>
+<input type="radio" id="no" name="hxCACScore" value="No">
+<label for="no">No</label><br>
+
+
+<p>Enter the coronary calcium score:  </p>
+
+<input type="radio" id="CACScoreZero" name="CACScore" value="CAC = 0">
+<label for="CACScoreZero">0</label><br>
+<input type="radio" id="CACScore1-100" name="CACScore" value="CAC = 1-100">
+<label for="CACScore1-100">1-100</label><br>
+<input type="radio" id="CACScore101-400" name="CACScore" value="CAC = 101-400">
+<label for="CACScore101-400">101-400</label><br>
+<input type="radio" id="CACScore>400" name="CACScore" value="CAC >400">
+<label for="CACScore>400">>400</label><br>
+
+<p>Have you ever had hsCRP measurement?</p>
+
+<input type="radio" id="yes" name="hsCRP?" value="Yes">
+<label for="yes">Yes</label><br>
+<input type="radio" id="no" name="hsCRP?" value="No">
+<label for="no">No</label><br>
+<br>
+
+
+<p>Check all of the following that are true:</p>
+
+<input type="checkbox" class="highRiskFactors" id="primaryHyperchol" name="primaryHyperchol" value="Primary hypercholesterolemia with LDL-cholesterol >= 160">
+<label for="primaryHyperchol"> Primary hypercholesterolemia with LDL-cholesterol > 160</label><br>
+<input type="checkbox" class="highRiskFactors" id="hypertriglyceridemia" name="hypertriglyceridemia" value="Persistently elevated triglycerides (>175)">
+<label for="hypertriglyceridemia"> Persistently elevated triglycerides (>175)</label><br>
+<input type="checkbox" class="highRiskFactors" id="hsCRP" name="hsCRP" value="hs-CRP >= 2.0 mg/dl">
+<label for="hsCRP"> hs-CRP value >= 2.0 mg/dl</label><br>
+<input type="checkbox" class="highRiskFactors" id="elevatedLp(a)" name="elevatedLp(a)" value="Lp(a) > 50 mg/dl">
+<label for="elevatedLp(a)"> Lp(a) > 50 mg/dl</label><br>
+<input type="checkbox" class="highRiskFactors" id="elevaed ApoB" name="elevaed ApoB" value="apoB >= 130">
+<label for="elevaed ApoB"> apoB >= 130</label><br>
+<input type="checkbox" class="highRiskFactors" id="fhOfASCVD" name="fhOfASCVD" value="FH of premature ASCVD">
+<label for="fhOfASCVD"> Family history of premature cardiovascular disease (Males < age 55, Females < age 65)</label><br>
+<input type="checkbox" class="highRiskFactors" id="fhOfFH" name="fhOfFH" value="FH of familial hypercholesterolemia">
+<label for="fhOfFH"> Family history of Familial hypercholesterolemia</label><br>
+<input type="checkbox" class="highRiskFactors" id="ABI<0.9" name="ABI<0.9" value="ABI < 0.9">
+<label for="ABI<0.9"> Ankle-brachial index < 0.9</label><br>
+<input type="checkbox" class="highRiskFactors" id="CKD" name="CKD" value="Chronic Kidney Disease">
+<label for="CKD"> Chronic kidney disease</label><br>
+<input type="checkbox" class="highRiskFactors" id="metabolicSyndrome" name="metabolicSyndrome" value="Metabolic Syndrome">
+<label for="metabolicSyndrome"> Metabolic syndrome</label><br>
+<input type="checkbox" class="highRiskFactors" id="inflammatoryDisease" name="inflammatoryDisease" value="Inflammatory Diseases (RA, psoriasis, HIV)">
+<label for="inflammatoryDisease"> Inflammatory disease (rheumatoid arthritis, psoriasis, HIV disease)</label><br>
+<input type="checkbox" class="highRiskFactors" id="sAsianAncestry" name="sAsianAncestry" value="Ethnicity factors: South Asian ancestry">
+<label for="sAsianAncestry"> South Asian ancestry</label><br>
+<input type="checkbox" class="highRiskFactors" id="edPresent" name="edPresent" value="ED present">
+<label for="edPresent"> (Males only) Erectile dysfunction</label><br>
+<input type="checkbox" class="highRiskFactors" id="preeclampsia" name="preeclampsia" value="For women:  preeclampsia, premature menopause">
+<label for="preeclampsia"> (Females only) History of preeclampsia or premature menopause</label><br>
+
+
+<h2>Tobacco</h2>
+
+
+<p>Are you a current smoker?</p>
+
+<input type="radio" id="yes" name="Current smoker?" value="Yes">
+<label for="yes">Yes</label><br>
+<input type="radio" id="no" name="Current smoker?" value="No">
+<label for="no">No</label><br>
+
+
+<p>Did you smoke previously?</p>
+
+<input type="radio" id="yes" name="priorSmoker" value="Yes">
+<label for="yes">Yes</label><br>
+<input type="radio" id="no" name="priorSmoker" value="No">
+<label for="no">No</label><br>
+<br>
+
+<p><label for="smokingDuration">Total years smoking:</label>
+        <input type="number" id="smokingDuration" name="smokingDuration"></input></p>
+<p><label for="smokingPpd">Average packs per day:</label>
+        <input type="number" id="smokingPpd" name="smokingPpd"></input></p>
+<p><label for="yearsQuit">Years since quitting:</label>
+        <input type="number" id="yearsQuit" name="yearsQuit"></input></p>
+
+<p>Do you live with someone who smokes?</p>
+
+<input type="radio" id="yes" name="secondHandSmoke" value="Yes">
+<label for="yes">Yes</label><br>
+<input type="radio" id="no" name="secondHandSmoke" value="No">
+<label for="no">No</label><br>
+
+
+<h2>Aspirin use</h2>
+
+<p>Do you use aspirin regularly?</p>
+
+<input type="radio" id="yes" name="aspirin" value="Yes">
+<label for="yes">Yes</label><br>
+<input type="radio" id="no" name="aspirin" value="No">
+<label for="no">No</label><br>
+
+
+
+<h2>Any questions you’d like to discuss with your provider?</h2>
+
+
+<label for="questions">Type any questions:</label>
+<input type="text" name="questions"></input>
+<br>
+<br>
+<br>
+<br>
+
+<div id="buttonDiv"><button type="button" id="confirmButton" onclick="checkIfAlternateCalculatorNeeded()"
+        >Confirm Entries</button></div>
+
+<p id="acknowledgeConfirmation"></p>
+<br>
+
+<button type="button" id="entryButton" 
+        >Submit Entries</button>
+
+</form>
+
+<br>
+<br>
+<br>
+
+<div id="printableDisplay">
+    </div>
+<input type="button" id="printButton" value="Print" 
+    onclick="printDiv('printableDisplay')"></input>
+<input type="button" id="returnButton" value="Return to entry form" 
+    onclick="returnToForm()"></input>
+<input type="button" id="closeButton" value="Close" 
+    onclick="closeApplication()"></input>
+
+</body>
+</html>
+

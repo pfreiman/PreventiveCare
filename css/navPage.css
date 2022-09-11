@@ -1,0 +1,44 @@
+body {
+    background-color: rgb(152, 174, 201);
+}
+
+header {
+    color: rgb(31, 23, 100); 
+    border-bottom: 5px solid rgb(31, 23, 100);
+    width: 80%;
+}
+
+#pcHeaderParagraph {
+    color:black;
+}
+
+h1 {
+    color:rgb(31, 23, 100);
+    font-size: 36pt; 
+    text-decoration: underline; 
+}
+
+h2 {text-decoration: underline;}
+
+p {
+    font-size: 16pt;
+    color:rgb(31, 23, 100);
+}
+
+form {
+    background-color: rgb(152, 174, 201);
+}
+
+#printButton {
+    display:none
+}
+
+span {
+    font:bold;
+}
+
+#enterRiskValue {
+    background-color: darkturquoise;
+    font-size: 20pt;
+    color:red;
+}

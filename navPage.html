@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/navPage.css">
+	<script src = "js/functions.js" defer></script>
+	<title>Alternate Risk Score Calculators</title>
+</head>
+<body>
+<h1>Alternate Risk Scores</h1>
+
+<br>
+<p>Entries do not match inclusion criteria for the ACC/AHA Risk Score calculation.</p>
+
+<p>Alternate Risk Score calculators should be used if:  <br>
+		<ul><li>Age is less than 40 or greater than 75 years</li><li>Race is other than white or african-american </li></ul></p>
+		<p>Also, some risk score calculators allow the incorporation of Coronary Artery Calcium (CAC) scores and/or CRP values.</p>
+</p>
+<br>
+
+
+<nav>
+	<h2>Applications to calculate Ten Year Risk:</h2>
+	<br>
+	<p>If age 25-40 or 75-84, or race other than white or african-american, consider using QRISK3 score:</p>
+	<a href="https://qrisk.org/three/index.php">QRISK3</a>
+
+	
+	<p>If Coronary Artery Calcium score is available:  </p>
+
+	<a href="http://astrocharm.org/calculator-working/">Astro-CHARM</a>
+	<br>
+	<a href="https://www.mesa-nhlbi.org/MESACHDRisk/MesaRiskScore/RiskScore.aspx">MESA</a>
+	
+	<p>If CRP is available:</p>
+	<a href="http://www.reynoldsriskscore.org/">Reynolds Risk Score</a>
+	<br>
+	<br>
+	<h2>Applications to calculate Lifetime Risk:</h2><br>
+		<a href="https://qrisk.org/lifetime/">QRISK-Lifetime</a>
+
+</nav>
+<br><br><br>
+
+<p> <b>Enter calculated Ten Year Risk (%):  </b> <input type="number" id="tenYearRiskValue" name="tenYearRiskValue"></input></p>
+
+
+<br>
+<p>Indicate source of Ten Year Risk Assessment calculation:</p>
+
+
+<input type="radio" class="riskScoreSource" id="qrisk3" name="riskScoreSource" value="QRISK3">
+<label for="qrisk3">QRISK3</label><br>
+<input type="radio" class="riskScoreSource" id="astroCharm" name="riskScoreSource" value="Astro-CHARM">
+<label for="astrocharm">Astro-CHARM</label><br>
+<input type="radio" class="riskScoreSource" id="mesa" name="riskScoreSource" value="MESA">
+<label for="mesa">MESA</label><br>
+<input type="radio" class="riskScoreSource" id="reynoldsriskscore" name="riskScoreSource" value="Reynolds Risk Score">
+<label for="reynoldsriskscore">Reynolds Risk Score</label><br>
+<input type="radio" class="riskScoreSource" id="qriskLifetime" name="riskScoreSource" value="QRISK-Lifetime">
+<label for="qriskLifetime">QRISK-Lifetime</label><br>
+<input type="radio" class="riskScoreSource" id="other" name="riskScoreSource" value="Other">
+<label for="qriskLifetime">Other</label><br>
+<br><br>
+<input type = button id="enterRiskValue" value="Accept Ten Year Risk Score" onclick='acceptTenYearRiskValue()'/>
+
+
+</body>
+</html>
