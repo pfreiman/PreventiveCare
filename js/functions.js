@@ -510,19 +510,19 @@ function hypertension (entries_rb, entries_num) {
     else if (entries_rb["Recent BP range:"] == "130-139/80-89") {
 
         if ((tenYearRisk < 10) && ((entries_rb["Diabetic?"] == "Yes" ) || (entries_rb["CKD present?"] == "Yes"))) {
-            rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension and estimated 10-year risk of cardiovascular disease is less than 10%.</b></p>  Either diabetes or chronic kidney disease are present.  Use of BP-lowering medication is recommended with a BP target of <130/80 mm Hg. "
+            rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension and estimated 10-year risk of cardiovascular disease is less than 10%.</b></p>  Either diabetes or chronic kidney disease are present.  In adults with borderline hypertension (BP 120-129/<80 mm Hg) or hypertension, initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  With Stage 1 hypertension, use of BP-lowering medication is recommended with a BP target of <130/80 mm Hg. "
         }
         else if (tenYearRisk < 10) {
-            rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension and estimated 10-year risk of cardiovascular disease is less than 10%.</b></p>  Nonpharmacologic therapy is recommended as the initial treatment.  A BP target of <130/80 mm Hg is recommended. "
+            rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension and estimated 10-year risk of cardiovascular disease is less than 10%.</b></p>  Nonpharmacologic therapy is recommended as the initial treatment.  In adults with borderline hypertension (BP 120-129/<80 mm Hg) or hypertension, initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  A BP target of <130/80 mm Hg is recommended. "
         }
         else if (((tenYearRisk >= 10) || (entries_rb["Diabetic?"] == "Yes" )) || entries_rb["CKD present?"] == "Yes")  {
-            rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension and estimated 10-year risk of cardiovascular disease is greater than 10% or either diabetes or chronic kidney disease are present.</b></p>  Use of BP-lowering medication is recommended with a BP target of <130/80 mm Hg. "
+            rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension and estimated 10-year risk of cardiovascular disease is greater than 10% or either diabetes or chronic kidney disease are present.</b></p>  In adults with borderline hypertension (BP 120-129/<80 mm Hg) or hypertension, initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  With Stage 1 hypertension and increased risk of cardiovascular disease, use of BP-lowering medication is recommended with a BP target of <130/80 mm Hg. "
         }
         console.log(rec);
     }
 
     else if (entries_rb["Recent BP range:"] == "140+/90+") {
-        rec = "<p>Your current level of blood pressure  is classified as <b>Stage 2 Hypertension.</b></p>  A target BP of <130/80 mm Hg is recommended.  Treatment should include nonpharmacological and BP-lowering medication."}
+        rec = "<p>Your current level of blood pressure  is classified as <b>Stage 2 Hypertension.</b></p>   Initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  With Stage 2 hypertension,treatment should include nonpharmacological and BP-lowering medication. A target BP of <130/80 mm Hg is recommended."}
 
     console.log("REC for hypertension is:  " + rec);
 
@@ -575,13 +575,13 @@ function tenYearRiskAssessment(entries_rb, entries_num) {
     rec += "This estimated risk score is derived from:  " + sourceDisplay + "<br></br>"
 
     if (ten_year_risk < 5) {
-        rec = rec + "  This is considered to be <b>low risk</b>."}
+        rec = rec + "  This is considered to be <b>low risk</b>.<br>"}
     else if (ten_year_risk >= 5 && ten_year_risk < 7.5) {
-        rec = rec + "  This is considered to be <b>intermediate risk</b>."}
+        rec = rec + "  This is considered to be <b>intermediate risk</b>.<br>"}
     else if (ten_year_risk >= 7.5 && ten_year_risk <= 20) {
-        rec = rec + "  This is considered to be <b>high risk</b>."}
+        rec = rec + "  This is considered to be <b>high risk</b>.<br>"}
     else if (ten_year_risk > 20) {
-        rec = rec + "  This is considered to be <b>very high risk</b>."
+        rec = rec + "  This is considered to be <b>very high risk</b>.<br>"
     }
 
     let finalRec = rec + "   " + pcRiskAssessmentRec;
@@ -638,7 +638,7 @@ function  weightManagement (entries_numerical) {
     if (bmi < 18.5) {
         finalRec = bmiDefinition + "  <br>Low bmi values are often associated with malnutrition and worse outcomes.  Consult with your health care provider regarding further evaluation and a nutritional plan."}
     else if (bmi >= 18.5 && bmi <= 25) {
-        finalRec = bmiDefinition + "  <br>Continue current diet and weight control strategies.  A healthy plant-based or Mediterranean-like diet high in vegetables, fruits, nuts, whole grains, lean vegetable or animal protein (preferably fish), and vegetable fiber has been shown to lower the risk of death compared to a standard diet."}
+        finalRec = bmiDefinition + "  <br>Recommend:  continue current diet and weight control strategies.  A healthy plant-based or Mediterranean-like diet high in vegetables, fruits, nuts, whole grains, lean vegetable or animal protein (preferably fish), and vegetable fiber has been shown to lower the risk of death compared to a standard diet."}
     else if (bmi > 25) {
         finalRec = bmiDefinition + "  <br>" + pcObesityRec;
     }
