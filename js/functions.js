@@ -499,7 +499,7 @@ function hypertension (entries_rb, entries_num) {
     let rec = "";
 
     if (entries_rb["Recent BP range:"] == "<120 systolic") {
-        rec = "<p>Your current level of blood pressure  is classified as <b>normal.<b/></p>  Following a healty lifestyle, diet, weight control and exercise will help maintain excellent blood pressure control."
+        rec = "<p>Your current level of blood pressure  is classified as <b>normal.</b><br>  Following a healty lifestyle, diet, weight control and exercise will help maintain excellent blood pressure control.</p>"
         console.log(rec);
     }
     else if (entries_rb["Recent BP range:"] == "120-129/<80") {
