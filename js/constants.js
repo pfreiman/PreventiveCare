@@ -30,7 +30,7 @@ const coeffAAFemaleLnAgeSquared = 0
 const coeffAAFemaleLnAgexLnTC = 0
 const coeffAAFemaleLnAgexLnHDL_C = 4.475
 const coeffAAFemaleLnAgexLnTreatedSBP = -6.432
-const coeffAAFemaleLnAgexLnUntreatedSBP = -6.080
+const coeffAAFemaleLnAgexLnUntreatedSBP = -6.087
 const coeffAAFemaleLnAgexSmoker = 0
 
 const coeffWMaleLnAge = 12.344
@@ -129,6 +129,7 @@ function getCoeffTreatedSBP(gender, race, IsHTNTreated) {
             coeffTreatedSBP = coeffAAMaleLnTreatedSBP}
     else {
         coeffTreatedSBP = 0}
+    console.log (coeffTreatedSBP);
     return coeffTreatedSBP;
 }
 
@@ -217,29 +218,25 @@ function getCoeffLnAgexLnHDL_C (gender, race){
 }
 
 function getCoeffLnAgexLnTreatedSBP (gender, race, IsHTNTreated){
-    let coeffLnAgexLnTreatedSBP;
+   
+    let coeffLnAgexLnTreatedSBP = 0;
     if (IsHTNTreated == 'Yes') {
-        coeffLnAgexLnTreatedSBP = 0}
-    else if (IsHTNTreated == 'No') {
         if (gender == "Female" && race == "White") {
             coeffLnAgexLnTreatedSBP = coeffWFemaleLnAgexLnTreatedSBP} 
         else if (gender == "Female" && race == "African American") {
-            coeffLnAgexLnTreatedSBP = coeffAAFemaleLnTreatedSBP}
+            coeffLnAgexLnTreatedSBP = coeffAAFemaleLnAgexLnTreatedSBP}
         else if (gender == "Male" && race == "White") {
             coeffLnAgexLnTreatedSBP = coeffWMaleLnAgexLnTreatedSBP}
         else if (gender == "Male" && race == "African American") {
             coeffLnAgexLnTreatedSBP = coeffAAMaleLnAgexLnTreatedSBP}
-        else {
-            coeffLnAgexLnTreatedSBP = undefined}
         }
     return coeffLnAgexLnTreatedSBP;
 }
 
 function getCoeffLnAgexLnUntreatedSBP (gender, race, IsHTNTreated){
-    let coeffLnAgexLnUntreatedSBP;
-    if (IsHTNTreated == 'Yes') {
-        coeffLnAgexLnUntreatedSBP = 0}
-    else if (IsHTNTreated == 'No') {
+    
+    let coeffLnAgexLnUntreatedSBP = 0;
+    if (IsHTNTreated == 'No') {
         if (gender == "Female" && race == "White") {
             coeffLnAgexLnUntreatedSBP = coeffWFemaleLnAgexLnUntreatedSBP} 
         else if (gender == "Female" && race == "African American") {
@@ -248,8 +245,6 @@ function getCoeffLnAgexLnUntreatedSBP (gender, race, IsHTNTreated){
             coeffLnAgexLnUntreatedSBP = coeffWMaleLnAgexLnUntreatedSBP}
         else if (gender == "Male" && race == "African American") {
             coeffLnAgexLnUntreatedSBP = coeffAAMaleLnAgexLnUntreatedSBP}
-        else {
-            coeffLnAgexLnUntreatedSBP = undefined}
         }
     return coeffLnAgexLnUntreatedSBP;
 }
