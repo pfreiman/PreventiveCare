@@ -1,5 +1,4 @@
 //  BMI calculator
-
 function BMICalculator(entries_numerical) {
     let BMI;
     BMI = (entries_numerical["Weight (lbs)"] / (entries_numerical["Height (in)"]**2)) * 703
@@ -16,11 +15,11 @@ function BMICalculatorInterpreter(BMI) {
     let recommendation = "";
 
 	if (BMI <18.5) {
-		recommendation = "<p>Your calculated BMI is: <b>" + BMI + "</b>.  This result is categorized as <b>UNDERWEIGHT.</b></p>"}
+		recommendation = "<p>Your calculated BMI is: <b> " + BMI + "</b>.  This result is categorized as <b>underweight.</b></p>"}
 	else if (BMI >=18.5 && BMI <=25) {
-		recommendation = "<p>Your calculated BMI is: <b> " + BMI + "</b>.  This result is categorized as <b>NORMAL WEIGHT.</b></p>"}
+		recommendation = "<p>Your calculated BMI is: <b> " + BMI + "</b>.  This result is categorized as <b>normal weight.</b></p>"}
     else if (BMI >25 && BMI <29.9) {
-        recommendation = "<p>Your calculated BMI is: <b> " + BMI + "</b>.  This result is categorized as <b>OVERWEIGHT.</b></p>"}
+        recommendation = "<p>Your calculated BMI is: <b> " + BMI + "</b>.  This result is categorized as <b>overweight.</b></p>"}
     else if (BMI >=30 && BMI <34.9) {
         recommendation = "<p>Your calculated BMI is: <b> " + BMI + "</b>.  This result is categorized as <b>Class 1 Obesity.</b></p>"}
     else if (BMI >=35 && BMI <39.9) {
@@ -31,12 +30,35 @@ function BMICalculatorInterpreter(BMI) {
 		return recommendation;
     }
 
+
+// highRiskArray function -- identifies the "risk enhancers"
+
+function highRiskArray() {
+    
+    let rec;
+    let ele = document.getElementsByClassName("highRiskFactors");
+    let highRiskArray = [];
+
+    for(let i = 0; i < ele.length; i++) {
+
+        if(ele[i].type=="checkbox") {  
+            if(ele[i].checked == true) {
+                highRiskArray.push(" " + (ele[i].value));
+            }
+        }
+    }
+        rec = "Your medical history includes the following risk enhancing factors:  " + highRiskArray;
+
+        return rec;  
+}
+
+
 // Lipid management -- primary prevention
 
 function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entries_numerical) {
     console.log("ENTERED lipid-primary prevention function");
     
-    let recommendation = "<br>Based on the current lipid profile and other clinical factors, there is no clear indication for statin therapy."
+    let recommendation = "<br>Based on the current lipid profile and other clinical factors, there is no need to start or add additional lipid lowering medication."
     
     let tenYearRisk = pooledCohortEquations(entries_radiobuttons, entries_numerical);
     console.log("Ten year risk using the PCE is:  " + tenYearRisk)
@@ -81,7 +103,7 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
     }
 
     if ((entries_radiobuttons["Diabetic?"] == "Yes") && ((40 < entries_numerical["Age:"]) && (entries_numerical["Age:"] <= 75))) {
-        recommendation = "<br>In diabetics between 40 and 75 years of age, moderate intensity statin therapy is indicated (class I).  <br>If multiple risk factors or risk enhancers (e.g. elevated CAC score, HTN, T2DM for > 10 years, T1DM > 20 years, eGFR < 60, albuminuria, retinopathy, neuropathy, ABI < 0.9, smoking, +FH), may consider high intensity statin therapy to lower LDL by > 50% (class IIa)."
+        recommendation = "<br>In diabetics between 40 and 75 years of age, moderate intensity statin therapy is indicated (class I).  <br>If multiple risk factors ('risk enhancers') are present, may consider high intensity statin therapy to lower LDL by > 50% (class IIa).<br>  Specific risk enhancing factors in your medical history include:  " + highRiskArray
     }
 
     if ( ( (entries_checkboxes["FH of familial hypercholesterolemia"] == true) && (entries_numerical["Age:"] < 20) ) ) {
@@ -96,16 +118,16 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
     }
     
     if (((entries_numerical["Age:"] >= 40) && entries_numerical["Age:"] <= 75) && (((LDL_C >= 70) && (LDL_C < 190) && (entries_radiobuttons["Diabetic?"] == "No")))) {
-        recommendation = "<br>In the absence of diabetes, the decision to initiate therapy for hyperlipidemia when age is 40-75 and LDL-cholesterol is 70-190 is not clear and further discussion regarding the pros and cons of treatment is advised.  <br>Determining the 10-year risk of cardiovascular disease helps to determine further therapeutic suggestions.  <br>Based on the entered data, the 10-year risk is:  " + tenYearRisk + " %.  (> 7.5 % is considered intermediate risk, > 20 % is high risk).  <br><br>When the risk calculation is borderline and treatment decision is unclear, risk enhancers can refine the risk assessment.  <br>Certain factors may add to the estimated risk calculation.  In your case, specific individual factors that increase the calculated risk include:  " + highRiskArray + ".  <br><br>If risk decision is uncertain, determining the CAC score may be useful.  "
+        recommendation = "<br>In the absence of diabetes, the decision to initiate therapy for hyperlipidemia when age is 40-75 and LDL-cholesterol is 70-190 is not clear and further discussion regarding the pros and cons of treatment is advised.  <br>Determining the 10-year risk of cardiovascular disease helps to determine further therapeutic suggestions.  <br>Based on the entered data, the 10-year risk is:  " + tenYearRisk + " %.  (> 7.5 % is considered intermediate risk, > 20 % is high risk).  <br><br>When the risk calculation is borderline and treatment decision is unclear, risk enhancers can refine the risk assessment.  <br>Certain factors may add to the estimated risk calculation.  In your case, specific individual factors that increase the calculated risk include:  " + highRiskArray + ".  <br><br>If risk decision is uncertain, determining the coronary artery calcium score may be useful.  "
 
         if (tenYearRisk < 5) {
             recommendation = "<br><br>Low risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Recommend continued healthy lifestyle to reduce risk factors (class I).  "
         }
         else if (5 <= tenYearRisk && tenYearRisk < 7.5) {
-            recommendation += "<br><br>Borderline risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Recommend risk discussion to guide therapy.  If multiple risk enhancing factors present, consider CAC score to further evaluate risk or consider moderate intensity statin therapy (class IIb).  ";
+            recommendation += "<br><br>Borderline risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Recommend risk discussion to guide therapy.  If multiple risk enhancing factors present, consider coronary artery calcium score to further evaluate risk or consider moderate intensity statin therapy (class IIb).  ";
         }
         else if (7.5 <= tenYearRisk && tenYearRisk < 20 ) {
-            recommendation += "<br><br>Intermediate risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Recommend moderate intensity statin therapy indicated to reduce LDL-cholesterol by 30-49% (class I).   If multiple risk factors or risk enhancers present, may consider high intensity statin therapy.  ";
+            recommendation += "<br><br>Intermediate risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Recommend moderate intensity statin therapy indicated to reduce LDL-cholesterol by 30-49% (class I).   If multiple risk factors or risk enhancers present, may consider high intensity statin therapy.  Specific factors that add to the risk of heart or vascular disease include:  " + highRiskArray;
         }
         else if(tenYearRisk >= 20 ) {
             recommendation += "<br><br>High risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.    <br>Recommend statin therapy indicated to reduce LDL-cholesterol by >= 50 % (class I).  "
@@ -114,15 +136,15 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
 
     if (((entries_numerical["Age:"] >= 40) && entries_numerical["Age:"] <= 75) && (((LDL_C >= 70) && (LDL_C < 190) && (entries_radiobuttons["Diabetic?"] == "No")))) {
 
-        if (entries_radiobuttons["CAC score available?"] == "CAC = 0" ) {
-                    recommendation += "Coronary calcium score is 0. This result lowers risk assessment.    <br>Consider no statin therapy, unless diabetes, FH of premature ASCVD or smoking are present.  "
+        if (entries_radiobuttons["CACscore"] == "CAC = 0" ) {
+                    recommendation += "Coronary calcium score is 0. This result lowers risk assessment.    <br>Consider no statin therapy, unless diabetes, family history of premature cardiovascular disease or smoking are present.  "
         }
         
-        else if (entries_radiobuttons["CAC score available?"] == "CAC = 1-100" ) {
+        else if (entries_radiobuttons["CACscore"] == "CAC = 1-100" ) {
             recommendation += "Coronary calcium score is 1-100. <br>Statin therapy is favored, especially after age 55."
         }
 
-        else if (entries_radiobuttons["CAC score available?"] == "CAC > 100" ) {
+        else if ((entries_radiobuttons["CACscore"] == "CAC = 101-400") || (entries_radiobuttons["CACscore"] = "CAC >400"))  {
             recommendation += "Coronary calcium score is > 100. <br>High intensity statin therapy indicated."
         }
     }
@@ -135,7 +157,31 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
     return recommendation;
 }
 
+// metabolicSyndrome function
 
+function metabolicSyndrome (entries_rb, entries_num){
+    let counter = 0;
+    let rec = ""
+
+    if (((entries_rb["Gender:"] == "Female") && (entries_num["waist"] >= 35)) || 
+    ((entries_rb["Gender:"] == "Male") && (entries_num["waist"] >= 40))){
+        counter += 1 }
+    if ((entries_rb["hga1c"] >= 5.7) || (entries_num["fbs"] >100)) {
+        counter += 1 } 
+    if (entries_num["Systolic BP:"] > 130) {
+        counter += 1 }
+    if (entries_num["Triglycerides:"] > 150) {
+        counter += 1 }
+    if (((entries_rb["Gender:"] == "Female") && (entries_num["HDL-cholesterol:"] < 50)) ||     ((entries_rb["Gender:"] == "Male") && (entries_num["HDL-cholesterol:"] < 40))) {
+        counter += 1 }
+
+    if (counter >= 3) {
+        rec = "Multiple criteria (including possible high blood pressure, elevated blood sugar, increased abdominal girth, low HDL-cholesterol and/or elevated triglycerides) are present, consistent with a diagnosis of <b>metabolic syndrome.</b>  Metabolic syndrome is associated with significantly increased risks of cardiac or vascular disease.  It is best treated with a multi-pronged approach, including dietary measures, physical activity, weight control and sometimes medications.  "
+
+        return rec;
+    }
+    
+}
 
 //  Pooled Cohort Equations
 
@@ -387,14 +433,21 @@ function diabetes(entries_rb, entries_num) {
         additionalAdvice = "<p>Since there is a known history of cardiovascular disease or a history of congestive heart failure, the use of an SGLT-1 inhibitor may confer significant reduction in future cardiac events or worsening heart failure. </p> "
     }
 
-    if (HgA1C < 6.5 && dmPresent == "No") {
-        rec = "<p>The reported HgA1C level of <b>" + HgA1C + "</b> indicates there is no evidence of diabetes.</p>  Continue current dietary, activity and medication therapy for diabetes management.  " }
+
+    if (HgA1C < 5.7 && dmPresent == "No") {
+        rec = "<p>The reported HgA1C level of <b>" + HgA1C + "</b> indicates there is no evidence of diabetes.</p>  Continue current dietary and activity recommendations. " }
+    else if ((((HgA1C >= 5.7) && (HgA1C < 6.5)) && (dmPresent == "No")) || ((fbs > 100) && (fbs <125))) {
+        rec = "<p>The reported HgA1C level and/or fasting blood glucose level (HgA1C:  " + HgA1C + ", FBS:  " + fbs +") indicates there is no evidence of diabetes, but 'pre-diabetes' is present.</p>  Recommendation:  Following excellent dietary and activity patterns (and occasionally medications) can help delay the onset of type 2 diabetes.  " }
     else if (HgA1C < 6.5 && dmPresent == "Yes") {
         rec = "<p>The reported HgA1C level of <b>" + HgA1C + "</b> indicates diabetes is well-controlled.</p>  Continue current dietary, activity and medication therapy for diabetes management.  " + additionalAdvice }
     else if (HgA1C >= 6.5 && HgA1C <= 7.0) {
-        rec = "<p>The reported HgA1C level of <b>" + HgA1C + "</b> indicates diabetes is adequately controlled, but borderline.</p>  Continue current dietary, activity and medication therapy for diabetes management.  Consider intensifying therapy to lower HgA1C.  " + pcDiabetesRec + "  " + additionalAdvice}
+        rec = "<p>The reported HgA1C level of <b>" + HgA1C + "</b> indicates diabetes is adequately controlled, but borderline.</p>  Continue dietary, activity and medication therapy for diabetes management.  Consider intensifying therapy to lower HgA1C. " + pcDiabetesRec + "  " + additionalAdvice}
     else if (HgA1C > 7.0) {
         rec = "<p>The reported HgA1C level of <b>" + HgA1C + "</b> indicates diabetes is not adequately controlled.</p>  Consider intensifying therapy to lower HgA1C.  " + pcDiabetesRec +  "  " + additionalAdvice}
+
+        let metabolicSyndromeRec = metabolicSyndrome(entries_rb, entries_num);
+
+        rec += "<p> " + metabolicSyndromeRec + "</p>"
 
     return rec;
 }
@@ -790,7 +843,7 @@ function determineRiskScoreCalculator(RDnum, RDrb) {
     console.log ("ENTERED determineRiskScore function");
 
     let confirmEntriesParagraph = document.getElementById("acknowledgeConfirmation");
-    console.log(confirmEntriesParagraph)
+    // console.log(confirmEntriesParagraph)
     confirmEntriesParagraph.innerHTML = "Entries are confirmed. Click submit button to continue."
 
     document.getElementById("confirmButton").style.display = "none";
