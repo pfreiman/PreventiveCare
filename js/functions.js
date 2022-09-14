@@ -855,8 +855,8 @@ function displaySourceOfRiskScore() {
 
 function returnToForm(){
     document.getElementById("entryForm").style.display = "block";
-    //document.getElementById("confirmButton").style.display = "block";
-    document.getElementById("entryButton").style.display = "block"
+    document.getElementById("confirmButton").style.display = "block";
+    document.getElementById("entryButton").style.display = "none"
     document.getElementById("printableDisplay").style.display = "none";
     document.getElementById("printButton").style.display = "none";
     document.getElementById("returnButton").style.display = "none";
