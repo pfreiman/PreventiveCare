@@ -183,10 +183,10 @@ console.log(counter)
         counter += 1 }
 console.log(counter)
     if (counter >= 3) {
-        rec = "Multiple criteria (including possible high blood pressure, elevated blood sugar, increased abdominal girth, low HDL-cholesterol and/or elevated triglycerides) are present, consistent with a diagnosis of <b>metabolic syndrome.</b>  Metabolic syndrome is associated with significantly increased risks of cardiac or vascular disease.  It is best treated with a multi-pronged approach, including dietary measures, physical activity, weight control and sometimes medications.  "
+        rec = "Multiple criteria (including possible high blood pressure, elevated blood sugar, increased abdominal girth, low HDL-cholesterol and/or elevated triglycerides) are present, consistent with a diagnosis of <b>metabolic syndrome.</b>  Metabolic syndrome is associated with significantly increased risks of cardiac or vascular disease.  It is best treated with a multi-pronged approach, including dietary measures, physical activity, weight control and sometimes medications.  "}
+    else {rec = " "}
 console.log (rec)
         return rec;
-    }
     
 }
 
@@ -452,8 +452,9 @@ function diabetes(entries_rb, entries_num) {
     else if (HgA1C > 7.0) {
         rec = "<p>The reported HgA1C level of <b>" + HgA1C + "</b> indicates diabetes is not adequately controlled.</p>  Consider intensifying therapy to lower HgA1C.  " + pcDiabetesRec +  "  " + additionalAdvice}
     console.log ("now on line 447")
+    console.log(rec)
     let metabolicSyndromeRec = metabolicSyndrome(entries_rb, entries_num);
-    console.log (metabolicSyndromeRec)
+    console.log ("metabolicSyndromeRec is: " + metabolicSyndromeRec)
     rec += "<p> " + metabolicSyndromeRec + "</p>"
 
     console.log(rec);
