@@ -166,18 +166,25 @@ function metabolicSyndrome (entries_rb, entries_num){
     if (((entries_rb["Gender:"] == "Female") && (entries_num["waist"] >= 35)) || 
     ((entries_rb["Gender:"] == "Male") && (entries_num["waist"] >= 40))){
         counter += 1 }
-    if ((entries_rb["hga1c"] >= 5.7) || (entries_num["fbs"] >100)) {
+console.log(counter)
+    if ((entries_rb["hga1c"] >= 5.7) || (entries_num["fbs"] > 100)) {
         counter += 1 } 
+console.log (((entries_num["hga1c"] >= 5.7) || (entries_num["fbs"] > 100)))
+console.log (entries_num["waist"])
+console.log (entries_num["waist"] >= 40)
+console.log (counter)
     if (entries_num["Systolic BP:"] > 130) {
         counter += 1 }
+console.log(counter)
     if (entries_num["Triglycerides:"] > 150) {
         counter += 1 }
-    if (((entries_rb["Gender:"] == "Female") && (entries_num["HDL-cholesterol:"] < 50)) ||     ((entries_rb["Gender:"] == "Male") && (entries_num["HDL-cholesterol:"] < 40))) {
+console.log(counter)
+    if (((entries_rb["Gender:"] == "Female") && (entries_num["HDL-cholesterol:"] <   50)) ||     ((entries_rb["Gender:"] == "Male") && (entries_num["HDL-cholesterol:"] < 40))) {
         counter += 1 }
-
+console.log(counter)
     if (counter >= 3) {
         rec = "Multiple criteria (including possible high blood pressure, elevated blood sugar, increased abdominal girth, low HDL-cholesterol and/or elevated triglycerides) are present, consistent with a diagnosis of <b>metabolic syndrome.</b>  Metabolic syndrome is associated with significantly increased risks of cardiac or vascular disease.  It is best treated with a multi-pronged approach, including dietary measures, physical activity, weight control and sometimes medications.  "
-
+console.log (rec)
         return rec;
     }
     
@@ -433,7 +440,7 @@ function diabetes(entries_rb, entries_num) {
         additionalAdvice = "<p>Since there is a known history of cardiovascular disease or a history of congestive heart failure, the use of an SGLT-1 inhibitor may confer significant reduction in future cardiac events or worsening heart failure. </p> "
     }
 
-
+    console.log ("now on line 436")
     if (HgA1C < 5.7 && dmPresent == "No") {
         rec = "<p>The reported HgA1C level of <b>" + HgA1C + "</b> indicates there is no evidence of diabetes.</p>  Continue current dietary and activity recommendations. " }
     else if ((((HgA1C >= 5.7) && (HgA1C < 6.5)) && (dmPresent == "No")) || ((fbs > 100) && (fbs <125))) {
@@ -444,10 +451,12 @@ function diabetes(entries_rb, entries_num) {
         rec = "<p>The reported HgA1C level of <b>" + HgA1C + "</b> indicates diabetes is adequately controlled, but borderline.</p>  Continue dietary, activity and medication therapy for diabetes management.  Consider intensifying therapy to lower HgA1C. " + pcDiabetesRec + "  " + additionalAdvice}
     else if (HgA1C > 7.0) {
         rec = "<p>The reported HgA1C level of <b>" + HgA1C + "</b> indicates diabetes is not adequately controlled.</p>  Consider intensifying therapy to lower HgA1C.  " + pcDiabetesRec +  "  " + additionalAdvice}
+    console.log ("now on line 447")
+    let metabolicSyndromeRec = metabolicSyndrome(entries_rb, entries_num);
+    console.log (metabolicSyndromeRec)
+    rec += "<p> " + metabolicSyndromeRec + "</p>"
 
-        let metabolicSyndromeRec = metabolicSyndrome(entries_rb, entries_num);
-
-        rec += "<p> " + metabolicSyndromeRec + "</p>"
+    console.log(rec);
 
     return rec;
 }
