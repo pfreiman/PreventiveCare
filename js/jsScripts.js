@@ -9,6 +9,8 @@
 var submitButton = document.querySelector("#entryButton");
 submitButton.addEventListener("click", startProgramAndCalculateResult);
 
+window.onbeforeunload = closingCode;
+
 
 // This function starts the program, calculates and displays the final results and ends program
 
@@ -181,3 +183,8 @@ function resultsStyling() {
     closeButton.style.display = "inline";
 }
 
+function closingCode(){
+    localStorage.removeItem("RiskTenYears");
+    localStorage.removeItem("Selected source");
+   return null;
+}

@@ -47,7 +47,7 @@ function highRiskArray() {
             }
         }
     }
-        rec = "Your medical history includes the following risk enhancing factors:  " + highRiskArray;
+        rec = "Your medical history includes the following factors that increase the risk of heart and vascular disease:  " + highRiskArray;
 
         return rec;  
 }
@@ -95,11 +95,11 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
     reportedLipidValues = "<p>Lipid profile results:  </p> <ul><li>Total cholesterol:  " + entries_numerical["Total cholesterol:"] + "</li>   <li>LDL-cholesterol:  " + entries_numerical["LDL-cholesterol:"] + "</li>   <li>HDL-cholesterol:  " + entries_numerical["HDL-cholesterol:"] + "</li></ul>"
 
     if ((entries_numerical["Age:"] > 75)) {
-        recommendation = "<br>Age is " + (entries_numerical["Age:"]) + ".  Guideline only valid in patients 75 years of age or less.  For patients over age 75, recommend clinical assessment and risk discussion to guide therapy."
+        recommendation = "<br>Age is " + (entries_numerical["Age:"]) + ".  Guideline is only valid in patients 75 years of age or less.  For individuals over age 75, recommend clinical assessment and risk discussion to guide therapy."
     }
     
     if  (LDL_C >= 190)  {
-        recommendation = "LDL-cholesterol is > 190 mg/dl.  High intensity statin therapy indicated (class I)."
+        recommendation = "LDL-cholesterol is > 190 mg/dl.  Guidelines recommend high intensity statin therapy. (class I)."
     }
 
     if ((entries_radiobuttons["Diabetic?"] == "Yes") && ((40 < entries_numerical["Age:"]) && (entries_numerical["Age:"] <= 75))) {
@@ -107,30 +107,30 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
     }
 
     if ( ( (entries_checkboxes["FH of familial hypercholesterolemia"] == true) && (entries_numerical["Age:"] < 20) ) ) {
-        recommendation = "In patients under age 20 with history of familial hypercholesterolemia, statin therapy is recommended."
+        recommendation = "In patients under age 20 with a history of familial hypercholesterolemia, statin therapy is recommended."
     }
 
     if ( ((entries_numerical["Age:"] >19) && (entries_numerical["Age:"] <40)) ) {
         recommendation = "In patients aged 20-39, estimate lifetime risk of ASCVD and advise healthy lifesttyle to reduce risk.  "
             if ((LDL_C >= 160) && (entries_checkboxes["FH of premature ASCVD"] == true))  {
-                recommendation += "LDL is elevated. With LDL > 160 and FH of premature CAD, consider statin therapy."
+                recommendation += "LDL-cholesterol is elevated. With LDL-cholesterol greater than 160 and family history of premature CAD, consider statin therapy."
             }
     }
     
     if (((entries_numerical["Age:"] >= 40) && entries_numerical["Age:"] <= 75) && (((LDL_C >= 70) && (LDL_C < 190) && (entries_radiobuttons["Diabetic?"] == "No")))) {
-        recommendation = "<br>In the absence of diabetes, the decision to initiate therapy for hyperlipidemia when age is 40-75 and LDL-cholesterol is 70-190 is not clear and further discussion regarding the pros and cons of treatment is advised.  <br>Determining the 10-year risk of cardiovascular disease helps to determine further therapeutic suggestions.  <br>Based on the entered data, the 10-year risk is:  " + tenYearRisk + " %.  (> 7.5 % is considered intermediate risk, > 20 % is high risk).  <br><br>When the risk calculation is borderline and treatment decision is unclear, risk enhancers can refine the risk assessment.  <br>Certain factors may add to the estimated risk calculation.  In your case, specific individual factors that increase the calculated risk include:  " + highRiskArray + ".  <br><br>If risk decision is uncertain, determining the coronary artery calcium score may be useful.  "
+        recommendation = "<br>With no history of diabetes, when age is 40-75 and LDL-cholesterol is 70-190 the decision to initiate therapy for hyperlipidemia is not clear and further discussion regarding the pros and cons of treatment is advised.  <br>Determining the 10-year risk of cardiovascular disease helps guide further therapeutic suggestions.  <br>Based on the entered data, the 10-year risk is:  " + tenYearRisk + " %.  (> 7.5 % is considered intermediate risk, > 20 % is high risk).  <br><br>When the risk calculation is borderline and treatment decision is unclear, risk enhancers can refine the risk assessment.  <br>Certain factors may add to the estimated risk calculation.  In your case, specific individual factors that increase the calculated risk include:  " + highRiskArray + ".  <br><br>If risk decision is uncertain, determining the coronary artery calcium score may be useful.  "
 
         if (tenYearRisk < 5) {
-            recommendation = "<br><br>Low risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Recommend continued healthy lifestyle to reduce risk factors (class I).  "
+            recommendation = "<br><br>Low risk.  The estimated ten year risk of cardiovascular disease is " + tenYearRisk + "%.  <br>Recommend continued healthy lifestyle to reduce risk factors (class I).  "
         }
         else if (5 <= tenYearRisk && tenYearRisk < 7.5) {
-            recommendation += "<br><br>Borderline risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Recommend risk discussion to guide therapy.  If multiple risk enhancing factors present, consider coronary artery calcium score to further evaluate risk or consider moderate intensity statin therapy (class IIb).  ";
+            recommendation += "<br><br>Borderline risk.  The estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Recommend risk discussion to guide therapy.  If multiple risk enhancing factors present, consider coronary artery calcium score to further evaluate risk or consider moderate intensity statin therapy (class IIb).  In your case, specific individual factors that increase the calculated risk include:  " + highRiskArray + ".  <br>";
         }
         else if (7.5 <= tenYearRisk && tenYearRisk < 20 ) {
-            recommendation += "<br><br>Intermediate risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Recommend moderate intensity statin therapy indicated to reduce LDL-cholesterol by 30-49% (class I).   If multiple risk factors or risk enhancers present, may consider high intensity statin therapy.  Specific factors that add to the risk of heart or vascular disease include:  " + highRiskArray;
+            recommendation += "<br><br>Intermediate risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Established guidelines recommend treatment with a moderate intensity statin to reduce LDL-cholesterol by 30-49% (class I).   If multiple risk factors or risk enhancers present, may consider high intensity statin therapy.  Specific factors that add to the risk of heart or vascular disease include:  " + highRiskArray;
         }
         else if(tenYearRisk >= 20 ) {
-            recommendation += "<br><br>High risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.    <br>Recommend statin therapy indicated to reduce LDL-cholesterol by >= 50 % (class I).  "
+            recommendation += "<br><br>High risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.    <br>Guideline directed therapy would recommend treatment with a statin to reduce LDL-cholesterol by >= 50 % (class I).  "
         }
     }
 
@@ -141,11 +141,11 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
         }
         
         else if (entries_radiobuttons["CACscore"] == "CAC = 1-100" ) {
-            recommendation += "Coronary calcium score is 1-100. <br>Statin therapy is favored, especially after age 55."
+            recommendation += "Coronary calcium score is 1-100. <br>Based on established guidelines, statin therapy is favored, especially after age 55."
         }
 
         else if ((entries_radiobuttons["CACscore"] == "CAC = 101-400") || (entries_radiobuttons["CACscore"] = "CAC >400"))  {
-            recommendation += "Coronary calcium score is > 100. <br>High intensity statin therapy indicated."
+            recommendation += "Coronary calcium score is > 100. <br>Treatment recommendations according to established guidelines include use of a high intensity statin."
         }
     }
     
@@ -477,9 +477,9 @@ function dietAndNutrition (entries_num, entries_cb) {
 
     console.log ("ENTERED dietAndNutrition function")
 
-    let result = "<p>Currently, you usually eat " + entries_num["mealNumber"] + " meals and have " + entries_num["snackNumber"] + " snacks each day.</p>"
+    let result = "<p>Currently, your diet typically includes " + entries_num["mealNumber"] + " meals and " + entries_num["snackNumber"] + " snacks each day.</p>"
 
-    result += "<p>In a typical week, you eat out " + entries_num["eatOutNumber"]+ " times.</p>"
+    result += "<p>In a typical week, you tend to eat out " + entries_num["eatOutNumber"]+ " times.</p>"
     
     result += "<p>Daily servings include:  <ul><li>Fruits or fruit juice:  " + entries_num["fruitNumber"] + "</li><li>Vegetables or vegetable juice:  " + entries_num["vegetableNumber"] + "</li> <li>Legumes :  " + entries_num["legumesNumber"] +"</li></ul></p>"
 
@@ -566,26 +566,26 @@ function hypertension (entries_rb, entries_num) {
         console.log(rec);
     }
     else if (entries_rb["Recent BP range:"] == "120-129/<80") {
-        rec = "<p>Your current level of blood pressure  is classified as <b>elevated or borderline.</b></p>  Initial treatment recommendations include weight loss, heart-healthy diet (DASH or Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet, exercise (including aerobic, isometric resistance and dynamic resistance exercises), and limited alcohol (for men <3 and for women <2 drinks per day)."
+        rec = "<p>Your current level of blood pressure  is classified as <b>elevated or borderline.</b></p>  Initial treatment recommendations include weight loss, a heart-healthy diet (DASH or Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet, exercise (including aerobic, isometric resistance and dynamic resistance exercises), and limited alcohol (for men <3 and for women <2 drinks per day)."
         console.log(rec);
     }
     
     else if (entries_rb["Recent BP range:"] == "130-139/80-89") {
 
         if ((tenYearRisk < 10) && ((entries_rb["Diabetic?"] == "Yes" ) || (entries_rb["CKD present?"] == "Yes"))) {
-            rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension and estimated 10-year risk of cardiovascular disease is less than 10%.</b></p>  Either diabetes or chronic kidney disease are present.  In adults with borderline hypertension (BP 120-129/<80 mm Hg) or hypertension, initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  With Stage 1 hypertension, use of BP-lowering medication is recommended with a BP target of <130/80 mm Hg. "
+            rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension and the estimated 10-year risk of cardiovascular disease is less than 10%.</b></p>  In addition, either diabetes or chronic kidney disease are present.  In adults with hypertension, initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  With Stage 1 hypertension, use of BP-lowering medication is recommended with a BP target of <130/80 mm Hg. "
         }
         else if (tenYearRisk < 10) {
-            rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension and estimated 10-year risk of cardiovascular disease is less than 10%.</b></p>  Nonpharmacologic therapy is recommended as the initial treatment.  In adults with borderline hypertension (BP 120-129/<80 mm Hg) or hypertension, initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  A BP target of <130/80 mm Hg is recommended. "
+            rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension and the estimated 10-year risk of cardiovascular disease is less than 10%.</b></p>  Non-drug therapy is recommended as the initial treatment.  In adults with hypertension, initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  A blood pressure target of <130/80 mm Hg is recommended. "
         }
         else if (((tenYearRisk >= 10) || (entries_rb["Diabetic?"] == "Yes" )) || entries_rb["CKD present?"] == "Yes")  {
-            rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension and estimated 10-year risk of cardiovascular disease is greater than 10% or either diabetes or chronic kidney disease are present.</b></p>  In adults with borderline hypertension (BP 120-129/<80 mm Hg) or hypertension, initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  With Stage 1 hypertension and increased risk of cardiovascular disease, use of BP-lowering medication is recommended with a BP target of <130/80 mm Hg. "
+            rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension.  In addition, either the estimated 10-year risk of cardiovascular disease is greater than 10%, diabetes is present or there is evidence of chronic kidney disease.</b></p>  Initial recommendations include weight loss, following a heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  With Stage 1 hypertension and increased risk of cardiovascular disease, use of BP-lowering medication is recommended with a BP target of <130/80 mm Hg. "
         }
         console.log(rec);
     }
 
     else if (entries_rb["Recent BP range:"] == "140+/90+") {
-        rec = "<p>Your current level of blood pressure  is classified as <b>Stage 2 Hypertension.</b></p>   Initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  With Stage 2 hypertension,treatment should include nonpharmacological and BP-lowering medication. A target BP of <130/80 mm Hg is recommended."}
+        rec = "<p>Your current level of blood pressure  is classified as <b>Stage 2 Hypertension.</b></p>   Initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  With Stage 2 hypertension,treatment should also include BP-lowering medication. A target BP of <130/80 mm Hg is recommended."}
 
     console.log("REC for hypertension is:  " + rec);
 
@@ -915,6 +915,7 @@ function displaySourceOfRiskScore() {
 
     return displayedText;
 }
+
 
 function returnToForm(){
     document.getElementById("entryForm").style.display = "block";
