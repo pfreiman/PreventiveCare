@@ -521,16 +521,23 @@ function exerciseAndActivity(entries_rb) {
 
     console.log ("ENTERED exerciseAndActivity function")
 
-    let result = "<p>Your current level of exercise is:  " + entries_rb["exercise"] + " per week.  </p>"
+    let result = ""; 
 
+    result += "<p>Your current level of exercise is:  " + entries_rb["exercise"] + " per week.  </p>"
+
+    if ((entries_rb["exercise"] == "None") || (entries_rb["exercise"] == "<150 minutes of moderate physical activity")) {
+        result += "<p>You can improve your health and lower the risk of cardiac and vascular events by increasing participation in regular physical activity.</p>"  }
+    if ((entries_rb["exercise"] == ">150 minutes of moderate physical activity") || (entries_rb["exercise"] == ">75 minutes of vigorous physical activity")) {
+        result += "<p>Excellent! Continue your current level of regular physical activity. </p>"  }
+console.log (((entries_rb["exercise"] == ">150 minutes of moderate physical activity") || (entries_rb["exercise" == ">75 minutes of vigorous physical activity"])))
     result += pcPhysicalActivityRec;
     return result
 }
 
 function exerciseAndActivityPrevCare(entries_rb) {
-
+    
     let rec = exerciseAndActivity(entries_rb);
-
+    console.log(rec)
     var displayText = document.getElementById("pcExerciseAndActivityText");
     displayText.innerHTML = pcPhysicalActivityText;
 
