@@ -144,7 +144,7 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
             recommendation += "Coronary calcium score is 1-100. <br>Based on established guidelines, statin therapy is favored, especially after age 55."
         }
 
-        else if ((entries_radiobuttons["CACscore"] == "CAC = 101-400") || (entries_radiobuttons["CACscore"] = "CAC >400"))  {
+        else if ((entries_radiobuttons["CACscore"] == "CAC = 101-400") || (entries_radiobuttons["CACscore"] == "CAC >400"))  {
             recommendation += "Coronary calcium score is > 100. <br>Treatment recommendations according to established guidelines include use of a high intensity statin."
         }
     }
