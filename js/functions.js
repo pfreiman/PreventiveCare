@@ -867,10 +867,10 @@ function determineRiskScoreCalculator(RDnum, RDrb) {
     document.getElementById("entryButton").style.display = "block";
 
     if ((RDrb["hxCACScore"] == "Yes") || (RDrb["hsCRP?"] == "Yes")) {
+        openAlternateCalculatorsPage() }
+    else if ((RDnum["Age:"] < 40) || (RDnum["Age:"] > 75)) {
         openAlternateCalculatorsPage()}
-    if ((RDnum["Age:"] < 40) || (RDnum["Age:"] > 75)) {
-        openAlternateCalculatorsPage()}
-    if (RDnum["Race:"] == "Other") {
+    else if (RDrb["Race:"] == "Other") {
         openAlternateCalculatorsPage()}
     return
     }
