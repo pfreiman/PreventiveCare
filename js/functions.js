@@ -31,6 +31,42 @@ function BMICalculatorInterpreter(BMI) {
     }
 
 
+
+function basalMetabolicRate (entries_num, entries_rb) {
+    console.log("ENTERED BMR FUNCTION................")
+    let bmr = 0;
+
+    if ((entries_rb["Gender:"]) == "Male") {
+        bmr = 66.5 + (13.75 * (entries_num['Weight (lbs)']/2.2)) + (5.003 * (entries_num['Height (in)'])*2.54) - (6.75 * (entries_num['Age:'])) }  ;
+    if ((entries_rb["Gender:"]) == "Female") {
+        bmr = 655.1 + (9.563 * (entries_num['Weight (lbs)']/2.2)) + (1.850 * (entries_num['Height (in)'])*2.54) - (4.676 * (entries_num['Age:']))   ;
+    }
+    bmr = Math.round(bmr);
+    console.log("BMR is:  " + bmr);
+    return bmr;
+}
+
+function tee (entries_num, entries_rb) {
+    console.log("ENTERED TEE FUNCTION................")
+    let tee;
+    let bmr;
+    bmr = basalMetabolicRate(entries_num, entries_rb);
+
+    if (entries_rb['exercise'] == 'None') {
+        tee = bmr * 1.2;
+    }
+    if (entries_rb['exercise'] == "1-150 minutes of moderate physical activity") {
+        tee = bmr * 1.375;
+    }
+    if ((entries_rb['exercise'] == "More than 75 minutes of vigorous physical activity") || (entries_rb['exercise'] == "More than 150 minutes of moderate physical activity")) {
+        tee = bmr * 1.725;
+    }
+    tee = Math.round(tee);
+    console.log("TEE is:  " + tee);
+    return tee;
+}
+
+
 // highRiskArray function -- identifies the "risk enhancers"
 
 function highRiskArray() {
@@ -127,10 +163,10 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
             recommendation += "<br><br>Borderline risk.  The estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Recommend risk discussion to guide therapy.  If multiple risk enhancing factors present, consider coronary artery calcium score to further evaluate risk or consider moderate intensity statin therapy (class IIb).  In your case, specific individual factors that increase the calculated risk include:  " + highRiskArray + ".  <br>";
         }
         else if (7.5 <= tenYearRisk && tenYearRisk < 20 ) {
-            recommendation += "<br><br>Intermediate risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Established guidelines recommend treatment with a moderate intensity statin to reduce LDL-cholesterol by 30-49% (class I).   If multiple risk factors or risk enhancers present, may consider high intensity statin therapy.  Specific factors that add to the risk of heart or vascular disease include:  " + highRiskArray;
+            recommendation += "<br><br>Intermediate risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Established guidelines recommend treatment with a moderate intensity statin to reduce LDL-cholesterol by 30-49% (class I).   If multiple risk factors or risk enhancers present, may consider high intensity statin therapy.  Specific factors that add to the risk of heart or vascular disease include:  " + highRiskArray + ".  <br>";
         }
         else if(tenYearRisk >= 20 ) {
-            recommendation += "<br><br>High risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.    <br>Guideline directed therapy would recommend treatment with a statin to reduce LDL-cholesterol by >= 50 % (class I).  "
+            recommendation += "<br><br>High risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.    <br>Guideline directed therapy would recommend treatment with a statin to reduce LDL-cholesterol by >= 50 % (class I). <br> "
         }
     }
 
@@ -140,11 +176,11 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
                     recommendation += "Coronary calcium score is 0. This result lowers risk assessment.    <br>Consider no statin therapy, unless diabetes, family history of premature cardiovascular disease or smoking are present.  "
         }
         
-        else if (entries_radiobuttons["CACscore"] == "CAC = 1-100" ) {
+        if (entries_radiobuttons["CACscore"] == "CAC = 1-100" ) {
             recommendation += "Coronary calcium score is 1-100. <br>Based on established guidelines, statin therapy is favored, especially after age 55."
         }
 
-        else if ((entries_radiobuttons["CACscore"] == "CAC = 101-400") || (entries_radiobuttons["CACscore"] == "CAC >400"))  {
+        if ((entries_radiobuttons["CACscore"] == "CAC = 101-400") || (entries_radiobuttons["CACscore"] = "CAC >400"))  {
             recommendation += "Coronary calcium score is > 100. <br>Treatment recommendations according to established guidelines include use of a high intensity statin."
         }
     }
@@ -473,15 +509,24 @@ function diabetesPrevCare(entries_rb, entries_num) {
     displayRec.innerHTML = rec;
 }
 
-function dietAndNutrition (entries_num, entries_cb) {
+function dietAndNutrition (entries_num, entries_rb, entries_cb) {
 
     console.log ("ENTERED dietAndNutrition function")
 
-    let result = "<p>Currently, your diet typically includes " + entries_num["mealNumber"] + " meals and " + entries_num["snackNumber"] + " snacks each day.</p>"
-
-    result += "<p>In a typical week, you tend to eat out " + entries_num["eatOutNumber"]+ " times.</p>"
+    let result = "<p>You reported that you eat beef or pork " + entries_num['redMeatNumber'] + " times per week. Red meat (beef and pork) is higher in saturated fat than white meat and plant-based proteins. There is a link between high saturated fat intake and risk of heart disease; therefore, it is recommended to limit red meat intake to no more than 3 times per week. Make most of your protein choices lean (low in saturated fat), such as chicken, turkey, fish, shellfish, and plant-based proteins. Good sources of plant-based protein include beans, lentils, soy products (tofu, tempeh, edamame, TVP or texturized vegetable protein), quinoa, nuts, and seeds." 
     
-    result += "<p>Daily servings include:  <ul><li>Fruits or fruit juice:  " + entries_num["fruitNumber"] + "</li><li>Vegetables or vegetable juice:  " + entries_num["vegetableNumber"] + "</li> <li>Legumes :  " + entries_num["legumesNumber"] +"</li></ul></p>"
+    let teeValue = tee(entries_num, entries_rb);
+    let fatGrams = teeValue * 0.10/9;
+    fatGrams = Math.round(fatGrams);
+
+    console.log("TEE is: "+teeValue);
+
+
+    result += "<p>You reported that your main cooking fat is " + entries_rb['fatsInCooking']  + ".   Butter, lard, shortening, coconut oil, and bacon drippings are concentrated sources of saturated fat. High saturated fat intake is linked to elevated LDL (“bad”) cholesterol levels and increased risk of heart disease. It is recommended to limit your saturated fat intake to no more than 10% of total calories. For you, that would equal a maximum of " + fatGrams + " grams saturated fat per day.  </p> "
+    
+    
+    result += "<p>You reported that you consume " + entries_num["fruitNumber"] + " servings of fruit and " + entries_num["vegetableNumber"] + " servings of vegetables daily.  Your combined total daily servings of fruits and vegetables is " + (Number(entries_num["fruitNumber"]) +  Number(entries_num["vegetableNumber"])) + ".  </p>   <p> It is recommended to consume a minimum of 5 combined servings of fruit and vegetables daily, as they are a good source of phytonutrients, such as antioxidants, and fiber. A serving of fruit is equal to a tennis ball-sized piece of fruit, 1 cup of chopped fresh fruit, or 2 Tablespoons dried fruit (no sugar added). A serving of vegetables is equal to ½ cup cooked, 1 cup raw, or 2 cups leafy greens. Choose options with higher fiber, such as eating an apple instead of drinking apple juice, to help you reach the minimum goal of 25 grams fiber per day for women and 30 grams per day for men. Fiber helps reduce cardiovascular risk by lowering LDL (“bad”) cholesterol. </p> "
+    
 
     // Identify all checked beverage choices
 
@@ -497,16 +542,26 @@ function dietAndNutrition (entries_num, entries_cb) {
         }
     }
 
-    result += "<p>Your preferred beverages include:  " + beverageChoicesArray + ".</p>"
+    result += "<p>Your preferred beverages include:  " + beverageChoicesArray + ".</p> To maintain a healthy weight and reduce the risk of heart disease, it is recommended to limit calorie-containing beverages, especially those that contain simple or refined sugars such as sugar-sweetened soda, sweet tea, energy drinks, and fruit juices. Beverages high in simple or refined sugars are linked to elevated triglyceride levels which can increase the risk of heart disease over time. Healthful beverage options include water, unsweetened carbonated water, artificially sweetened/diet/zero sugar beverages, and low-fat or fat-free milk/milk alternatives (unsweetened).  "
+
+
+
+    result += "<p>Your response to 'Do you add salt during cooking and/or at the table?' was:  " +  entries_rb['addedSalt']  + ".  You reported that you " + entries_rb['compareLabels']  + " compare products and choose lower-sodium options when shopping. </p> <p> Diets high in added salt/sodium are linked to increased blood pressure and risk of heart disease. The recommended daily limit for sodium is 2,300mg per day. 1 tsp of salt (all varieties) is equal to 2,300mg of sodium. The majority of sodium in the Standard American Diet typically comes from processed/self-stable food and not from added salt during cooking/eating. To reduce overall sodium intake, practice reading labels prior to purchasing products from the store. A low-sodium food has less than or equal to 140mg sodium per serving. A high-sodium food has greater than or equal to 300mg sodium per serving. Examples of high-sodium foods include cured meats (bacon, ham, pepperoni, salami, deli sliced meats), processed cheese, canned vegetables, canned beans, canned meats (tuna, chicken, Spam), instant mashed potatoes or flavored rice blends, chips/pretzels/crackers/microwave popcorn, pickles, and certain condiments such as soy sauce and ketchup. Examples of lower-sodium foods include fresh or frozen fruits and vegetables, natural cheese, fresh meats, no-salt-added canned vegetables and beans, mustard, and mayonnaise. Restaurant foods tend to be very high in sodium and eating out should be limited. </p> "
+
+
+
+    result += "<p>You indicated you eat out " + entries_num["eatOutNumber"]+ " times per week.</p>Restaurant food tends to be high in calories, added sugar, total fat, saturated fat, and sodium. It is recommended to limit eating out to a maximum of two (2) times per week. When eating out, look up nutrition information in advance. Most chain restaurants will have nutrition information posted on their website. Look for items cooked by low-fat method, such as baked, grilled, roasted, and steamed. Ask the chef not to salt food during cooking. Ask for salad dressings and sauces on the side to control intake. Choose calorie-free beverages, such as water or unsweetened tea. "
+
+
 
     result += pcNutritionRec;
 
     return result
 }
 
-function dietAndNutritionPrevCare (entries_num, entries_cb) {
+function dietAndNutritionPrevCare (entries_num, entries_rb, entries_cb) {
     
-    let rec = dietAndNutrition(entries_num, entries_cb);
+    let rec = dietAndNutrition(entries_num, entries_rb, entries_cb);
 
     var displayText = document.getElementById("pcDietAndNutritionText");
     displayText.innerHTML = pcNutritionText;
@@ -521,23 +576,16 @@ function exerciseAndActivity(entries_rb) {
 
     console.log ("ENTERED exerciseAndActivity function")
 
-    let result = ""; 
+    let result = "<p>Your current level of exercise is:  " + entries_rb["exercise"] + " per week.  </p>"
 
-    result += "<p>Your current level of exercise is:  " + entries_rb["exercise"] + " per week.  </p>"
-
-    if ((entries_rb["exercise"] == "None") || (entries_rb["exercise"] == "<150 minutes of moderate physical activity")) {
-        result += "<p>You can improve your health and lower the risk of cardiac and vascular events by increasing participation in regular physical activity.</p>"  }
-    if ((entries_rb["exercise"] == ">150 minutes of moderate physical activity") || (entries_rb["exercise"] == ">75 minutes of vigorous physical activity")) {
-        result += "<p>Excellent! Continue your current level of regular physical activity. </p>"  }
-console.log (((entries_rb["exercise"] == ">150 minutes of moderate physical activity") || (entries_rb["exercise" == ">75 minutes of vigorous physical activity"])))
     result += pcPhysicalActivityRec;
     return result
 }
 
 function exerciseAndActivityPrevCare(entries_rb) {
-    
+
     let rec = exerciseAndActivity(entries_rb);
-    console.log(rec)
+
     var displayText = document.getElementById("pcExerciseAndActivityText");
     displayText.innerHTML = pcPhysicalActivityText;
 
@@ -696,7 +744,13 @@ function tobaccoUsePrevCare(entries_rb) {
 }
 
 
-function  weightManagement (entries_numerical) {
+
+
+
+
+
+
+function  weightManagement (entries_numerical, entries_radiobuttons) {
     console.log("ENTERED WEIGHT MANAGEMENT FUNCTION");
 
     console.log(entries_numerical);
@@ -704,21 +758,28 @@ function  weightManagement (entries_numerical) {
     let bmi = BMICalculator(entries_numerical);
     let bmiDefinition = BMICalculatorInterpreter(bmi);
     let finalRec;
+
+    let teeValue = tee(entries_numerical, entries_radiobuttons);
+
     
     if (bmi < 18.5) {
         finalRec = bmiDefinition + "  <br>Low bmi values are often associated with malnutrition and worse outcomes.  Consult with your health care provider regarding further evaluation and a nutritional plan."}
     else if (bmi >= 18.5 && bmi <= 25) {
-        finalRec = bmiDefinition + "  <br>Recommend:  continue current diet and weight control strategies.  A healthy plant-based or Mediterranean-like diet high in vegetables, fruits, nuts, whole grains, lean vegetable or animal protein (preferably fish), and vegetable fiber has been shown to lower the risk of death compared to a standard diet."}
+        finalRec = bmiDefinition + "  <br>  Based on your sex, height, weight, age, and activity level, your daily calorie expenditure is "  + teeValue +  ".  To maintain your current weight, you should eat about this many calories every day."} 
+        
+        
+        
+        // Recommend:  continue current diet and weight control strategies.  A healthy plant-based or Mediterranean-like diet high in vegetables, fruits, nuts, whole grains, lean vegetable or animal protein (preferably fish), and vegetable fiber has been shown to lower the risk of death compared to a standard diet."}
     else if (bmi > 25) {
-        finalRec = bmiDefinition + "  <br>" + pcObesityRec;
+        finalRec = bmiDefinition + "  <br> Based on your sex, height, weight, age, and activity level, your daily calorie expenditure is "  + tee(entries_numerical, entries_radiobuttons) +  ".  Based on your BMI, you may benefit from weight reduction to reduce your risk of heart disease. At your current activity level, you should reduce your calorie intake by 500 calories per day, or consume " + (tee(entries_numerical, entries_radiobuttons)-500) + " calories per day, to lose about 1 lb per week. It is recommended to average 0.5-2 lbs of weight loss per week for sustainable weight loss. If your recommendation for weight loss is less than 1200 calories per day, you should follow-up regularly with a Registered Dietitian Nutritionist (RDN) throughout the weight loss process to allow for monitoring of adequate nutritional intake. " 
     }
 
     return finalRec
 }
 
-function weightManagementPrevCare (entries_numerical) {
+function weightManagementPrevCare (entries_numerical, entries_radiobuttons) {
 console.log(entries_numerical);
-    let Rec =weightManagement(entries_numerical);
+    let Rec =weightManagement(entries_numerical, entries_radiobuttons);
 
     var displayText = document.getElementById("pcWeightManagementText");
     displayText.innerHTML = pcObesityText;
@@ -789,9 +850,9 @@ function comprehensiveRec(entries_cb, entries_rb, entries_num) {
 
     exerciseAndActivityPrevCare(entries_rb);
 
-    dietAndNutritionPrevCare (entries_num, entries_cb)
+    dietAndNutritionPrevCare (entries_num, entries_rb, entries_cb)
 
-    weightManagementPrevCare(entries_num);
+    weightManagementPrevCare(entries_num, entries_rb);
 
     hypertensionPrevCare (entries_rb, entries_num);
 
@@ -845,6 +906,7 @@ function printDiv(divName) {
 // check to see if alternate Risk Score calculator is needed
 
 function checkIfAlternateCalculatorNeeded(){
+
     console.log("ENTERED checkAlternateRS calculator function")
 
     //let response_dict_checkboxes = retrieveValuesCheckboxes();
@@ -867,10 +929,10 @@ function determineRiskScoreCalculator(RDnum, RDrb) {
     document.getElementById("entryButton").style.display = "block";
 
     if ((RDrb["hxCACScore"] == "Yes") || (RDrb["hsCRP?"] == "Yes")) {
-        openAlternateCalculatorsPage() }
-    else if ((RDnum["Age:"] < 40) || (RDnum["Age:"] > 75)) {
         openAlternateCalculatorsPage()}
-    else if (RDrb["Race:"] == "Other") {
+    if ((RDnum["Age:"] < 40) || (RDnum["Age:"] > 75)) {
+        openAlternateCalculatorsPage()}
+    if (RDnum["Race:"] == "Other") {
         openAlternateCalculatorsPage()}
     return
     }
@@ -883,7 +945,6 @@ function openAlternateCalculatorsPage() {
 
 
 function acceptTenYearRiskValue() {
-
     // takes inputs for Alternate Risk Score and Risk Score Source and puts them into local storage and closes tab
     
     let alternateRiskScore;
