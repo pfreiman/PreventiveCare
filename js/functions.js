@@ -1,7 +1,7 @@
 //  BMI calculator
 function BMICalculator(entries_numerical) {
     let BMI;
-    BMI = (entries_numerical["Weight (lbs)"] / (entries_numerical["Height (in)"]**2)) * 703
+    BMI = (entries_numerical["weight"] / (entries_numerical["height"]**2)) * 703
     BMI = BMI.toFixed(1);
 
     console.log("BMI is:  " + BMI)
@@ -36,10 +36,10 @@ function basalMetabolicRate (entries_num, entries_rb) {
     console.log("ENTERED BMR FUNCTION................")
     let bmr = 0;
 
-    if ((entries_rb["Gender:"]) == "Male") {
-        bmr = 66.5 + (13.75 * (entries_num['Weight (lbs)']/2.2)) + (5.003 * (entries_num['Height (in)'])*2.54) - (6.75 * (entries_num['Age:'])) }  ;
-    if ((entries_rb["Gender:"]) == "Female") {
-        bmr = 655.1 + (9.563 * (entries_num['Weight (lbs)']/2.2)) + (1.850 * (entries_num['Height (in)'])*2.54) - (4.676 * (entries_num['Age:']))   ;
+    if ((entries_rb["Gender"]) == "Male") {
+        bmr = 66.5 + (13.75 * (entries_num['weight']/2.2)) + (5.003 * (entries_num['height'])*2.54) - (6.75 * (entries_num['Age'])) }  ;
+    if ((entries_rb["Gender"]) == "Female") {
+        bmr = 655.1 + (9.563 * (entries_num['weight']/2.2)) + (1.850 * (entries_num['height'])*2.54) - (4.676 * (entries_num['Age']))   ;
     }
     bmr = Math.round(bmr);
     console.log("BMR is:  " + bmr);
@@ -55,10 +55,10 @@ function tee (entries_num, entries_rb) {
     if (entries_rb['exercise'] == 'None') {
         tee = bmr * 1.2;
     }
-    if (entries_rb['exercise'] == "<150 minutes of moderate physical activity") {
+    if (entries_rb['exercise'] == "1-150 minutes of moderate physical activity") {
         tee = bmr * 1.375;
     }
-    if ((entries_rb['exercise'] == ">75 minutes of vigorous physical activity") || (entries_rb['exercise'] == ">150 minutes of moderate physical activity")) {
+    if ((entries_rb['exercise'] == "More than 75 minutes of vigorous physical activity") || (entries_rb['exercise'] == "More than 150 minutes of moderate physical activity")) {
         tee = bmr * 1.725;
     }
     tee = Math.round(tee);
@@ -70,7 +70,7 @@ function tee (entries_num, entries_rb) {
 // highRiskArray function -- identifies the "risk enhancers"
 
 function highRiskArray() {
-    
+    console.log ("ENTERED HIGH RISK ARRAY: $$$$$$$$$$$$$$$$$$ ");
     let rec;
     let ele = document.getElementsByClassName("highRiskFactors");
     let highRiskArray = [];
@@ -83,7 +83,14 @@ function highRiskArray() {
             }
         }
     }
+
+    if ((highRiskArray.length) === 0) {
+        highRiskArray = "none"
+    }
+
         rec = "Your medical history includes the following factors that increase the risk of heart and vascular disease:  " + highRiskArray;
+
+        console.log ("DISPLAY HIGH RISK ARRAY:  ") + highRiskArray;
 
         return rec;  
 }
@@ -92,26 +99,27 @@ function highRiskArray() {
 // Lipid management -- primary prevention
 
 function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entries_numerical) {
-    console.log("ENTERED lipid-primary prevention function");
+    console.log("ENTERED lipidPrimaryManagement function");
+
+    // set the default recommendation
     
     let recommendation = "<br>Based on the current lipid profile and other clinical factors, there is no need to start or add additional lipid lowering medication."
+
+    //determine the Ten Year Risk score:
     
     let tenYearRisk = pooledCohortEquations(entries_radiobuttons, entries_numerical);
     console.log("Ten year risk using the PCE is:  " + tenYearRisk)
 
     // If inclusion criteria not met, use Alternate Risk Score
 
-    if ((entries_radiobuttons["hxCACScore"] == "Yes") || (entries_radiobuttons["hsCRP?"] == "Yes")) {
+    if ((entries_radiobuttons["hxCACScore"] == "Yes") || (entries_radiobuttons["hsCRP"] == "Yes")) {
         tenYearRisk = localStorage.getItem("RiskTenYears");}
-    if ((entries_numerical["Age:"] < 40) || (entries_numerical["Age:"] > 75)) {
+    if ((entries_numerical["Age"] < 40) || (entries_numerical["Age"] > 79)) {
         tenYearRisk = localStorage.getItem("RiskTenYears");}
-    if (entries_numerical["Race:"] == "Other") {
+    if (entries_numerical["Race"] == "Other") {
         tenYearRisk = localStorage.getItem("RiskTenYears");}
 
     console.log (tenYearRisk);
-
-
-    let LDL_C = entries_numerical["LDL-cholesterol:"];
 
     // Identify all checked high-risk indicators
 
@@ -125,68 +133,86 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
                 highRiskArray.push(" " + (ele[i].value));
             }
         }
+        console.log ( highRiskArray);
     }
+
+    if ((highRiskArray.length) === 0) {
+        highRiskArray = "none"
+    }
+
+    //display the reported lipid values
     
     let reportedLipidValues = "";
-    reportedLipidValues = "<p>Lipid profile results:  </p> <ul><li>Total cholesterol:  " + entries_numerical["Total cholesterol:"] + "</li>   <li>LDL-cholesterol:  " + entries_numerical["LDL-cholesterol:"] + "</li>   <li>HDL-cholesterol:  " + entries_numerical["HDL-cholesterol:"] + "</li></ul>"
+    reportedLipidValues = "<p>Lipid profile results:  </p> <ul><li>Total cholesterol:  " + entries_numerical["tChol"] + "</li>   <li>LDL-cholesterol:  " + entries_numerical["ldlChol"] + "</li>   <li>HDL-cholesterol:  " + entries_numerical["hdlChol"] + "</li></ul>"
 
-    if ((entries_numerical["Age:"] > 75)) {
-        recommendation = "<br>Age is " + (entries_numerical["Age:"]) + ".  Guideline is only valid in patients 75 years of age or less.  For individuals over age 75, recommend clinical assessment and risk discussion to guide therapy."
+
+    // construct the recommendation
+
+    if ((entries_numerical["Age"] > 75)) {
+        recommendation = "<p>Age is " + (entries_numerical["Age"]) + ".  Lipid management guideline is only valid in patients 75 years of age or less.  For individuals over age 75, recommend clinical assessment and risk discussion to guide therapy. </p>";
+        return recommendation;
     }
     
+    let LDL_C = entries_numerical["ldlChol"];
     if  (LDL_C >= 190)  {
-        recommendation = "LDL-cholesterol is > 190 mg/dl.  Guidelines recommend high intensity statin therapy. (class I)."
+        recommendation = "<p>LDL-cholesterol is > 190 mg/dl.  Guidelines recommend high intensity statin therapy. (class I).</p>";
+        return recommendation;
     }
 
-    if ((entries_radiobuttons["Diabetic?"] == "Yes") && ((40 < entries_numerical["Age:"]) && (entries_numerical["Age:"] <= 75))) {
-        recommendation = "<br>In diabetics between 40 and 75 years of age, moderate intensity statin therapy is indicated (class I).  <br>If multiple risk factors ('risk enhancers') are present, may consider high intensity statin therapy to lower LDL by > 50% (class IIa).<br>  Specific risk enhancing factors in your medical history include:  " + highRiskArray
+    if ((entries_radiobuttons["diabetic"] == "Yes") && ((40 < entries_numerical["Age"]) && (entries_numerical["Age"] <= 75))) {
+        recommendation = "<p>In diabetics between 40 and 75 years of age, moderate intensity statin therapy is indicated (class I).  <br>If multiple 'risk enhancers' are present, may consider high intensity statin therapy to lower LDL by > 50% (class IIa).  Possible risk enhancers may include: long duration of diabetes(&ge; 10years in Type 2 diabetes, &ge; 20 years in Type 1 diabetes), albuminuria, retinopathy or neuropathy.  In addition, in your case, specific individual factors that increase the estimated cardiovascular risk include:  " + highRiskArray + ".  </p>";
+        return recommendation;
     }
 
-    if ( ( (entries_checkboxes["FH of familial hypercholesterolemia"] == true) && (entries_numerical["Age:"] < 20) ) ) {
-        recommendation = "In patients under age 20 with a history of familial hypercholesterolemia, statin therapy is recommended."
+    if ( ( (entries_checkboxes["FH of familial hypercholesterolemia"] == true) && (entries_numerical["Age"] < 20) ) ) {
+        recommendation = "<p>In patients under age 20 with a family history of familial hypercholesterolemia, statin therapy is recommended.</p>";
+        return recommendation;
     }
 
-    if ( ((entries_numerical["Age:"] >19) && (entries_numerical["Age:"] <40)) ) {
-        recommendation = "In patients aged 20-39, estimate lifetime risk of ASCVD and advise healthy lifesttyle to reduce risk.  "
+    if ( ((entries_numerical["Age"] >19) && (entries_numerical["Age"] <40)) ) {
+        recommendation = "<p>Since age is 20-39, it is best to estimate <u>lifetime</u> risk of ASCVD and advise healthy lifestyle to reduce risk. </p> ";
             if ((LDL_C >= 160) && (entries_checkboxes["FH of premature ASCVD"] == true))  {
-                recommendation += "LDL-cholesterol is elevated. With LDL-cholesterol greater than 160 and family history of premature CAD, consider statin therapy."
+                recommendation += "<p>Since LDL-cholesterol is elevated (&gt; 160) and there is family history of premature coronary artery disease, consider statin therapy.</p>";
             }
+        return recommendation;
     }
     
-    if (((entries_numerical["Age:"] >= 40) && entries_numerical["Age:"] <= 75) && (((LDL_C >= 70) && (LDL_C < 190) && (entries_radiobuttons["Diabetic?"] == "No")))) {
-        recommendation = "<br>With no history of diabetes, when age is 40-75 and LDL-cholesterol is 70-190 the decision to initiate therapy for hyperlipidemia is not clear and further discussion regarding the pros and cons of treatment is advised.  <br>Determining the 10-year risk of cardiovascular disease helps guide further therapeutic suggestions.  <br>Based on the entered data, the 10-year risk is:  " + tenYearRisk + " %.  (> 7.5 % is considered intermediate risk, > 20 % is high risk).  <br><br>When the risk calculation is borderline and treatment decision is unclear, risk enhancers can refine the risk assessment.  <br>Certain factors may add to the estimated risk calculation.  In your case, specific individual factors that increase the calculated risk include:  " + highRiskArray + ".  <br><br>If risk decision is uncertain, determining the coronary artery calcium score may be useful.  "
+    if (((entries_numerical["Age"] >= 40) && entries_numerical["Age"] <= 75) && (((LDL_C >= 70) && (LDL_C < 190) && (entries_radiobuttons["diabetic"] == "No")))) {
+        recommendation = "<p>With no history of diabetes, age 40-75 and LDL-cholesterol 70-190, the decision to initiate therapy for hyperlipidemia is not clear and further discussion regarding the pros and cons of treatment is advised.  <br>Determining the 10-year risk of cardiovascular disease helps guide further therapeutic suggestions. <br> <br>For you, the estimated 10-year risk of a cardiovascular event is:  " + tenYearRisk + " %. </p> ";
 
         if (tenYearRisk < 5) {
-            recommendation = "<br><br>Low risk.  The estimated ten year risk of cardiovascular disease is " + tenYearRisk + "%.  <br>Recommend continued healthy lifestyle to reduce risk factors (class I).  "
+            recommendation += "<p> This risk estimate is considered to be <b>low</b>.  <br>Recommend continued healthy lifestyle to reduce risk factors (class I).  </p>";
         }
+        
         else if (5 <= tenYearRisk && tenYearRisk < 7.5) {
-            recommendation += "<br><br>Borderline risk.  The estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Recommend risk discussion to guide therapy.  If multiple risk enhancing factors present, consider coronary artery calcium score to further evaluate risk or consider moderate intensity statin therapy (class IIb).  In your case, specific individual factors that increase the calculated risk include:  " + highRiskArray + ".  <br>";
+            recommendation += "<p>This risk estimate is considered to be <b>borderline</b>.  <br><br>Recommend risk discussion to guide therapy.  <br>When the risk calculation is borderline and treatment decision is unclear, evaluating risk enhancers can refine the risk assessment.  If multiple risk enhancers are present, consider therapy with moderate intensity statin (class IIb).<br> In your case, specific factors that increase the calculated risk include:  " + highRiskArray + ".  </p>";
         }
         else if (7.5 <= tenYearRisk && tenYearRisk < 20 ) {
-            recommendation += "<br><br>Intermediate risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.  <br>Established guidelines recommend treatment with a moderate intensity statin to reduce LDL-cholesterol by 30-49% (class I).   If multiple risk factors or risk enhancers present, may consider high intensity statin therapy.  Specific factors that add to the risk of heart or vascular disease include:  " + highRiskArray + ".  <br>";
+            recommendation += "<p>This risk estimate is considered to be <b>intermediate</b>.<br><br>Established guidelines recommend treatment with a moderate intensity statin to reduce LDL-cholesterol by 30-49% (class I).   If multiple risk factors or risk enhancers present, may consider high intensity statin therapy.  Specific factors that add to the risk of heart or vascular disease include:  " + highRiskArray + ". <br>If treatment decision remains uncertain, determining the coronary artery calcium score may be useful. </p>";
         }
         else if(tenYearRisk >= 20 ) {
-            recommendation += "<br><br>High risk.  Estimated ten year risk of ASCVD is " + tenYearRisk + "%.    <br>Guideline directed therapy would recommend treatment with a statin to reduce LDL-cholesterol by >= 50 % (class I). <br> "
+            recommendation += "<p>This risk estimate is considered to be <b>high</b>.<br>Guideline directed therapy recommenndation includes treatment with a statin to reduce LDL-cholesterol by &ge; 50 % (class I). </p> ";
         }
     }
 
-    if (((entries_numerical["Age:"] >= 40) && entries_numerical["Age:"] <= 75) && (((LDL_C >= 70) && (LDL_C < 190) && (entries_radiobuttons["Diabetic?"] == "No")))) {
+    if ((((entries_numerical["Age"] >= 40) && entries_numerical["Age"] <= 75) && (((LDL_C >= 70) && (LDL_C < 190) && (entries_radiobuttons["diabetic"] == "No")))) && (entries_radiobuttons["hxCACScore"] == "Yes")) {
 
-        if (entries_radiobuttons["CACscore"] == "CAC = 0" ) {
-                    recommendation += "Coronary calcium score is 0. This result lowers risk assessment.    <br>Consider no statin therapy, unless diabetes, family history of premature cardiovascular disease or smoking are present.  "
+        recommendation+= "<p> A coronary artery calcium score is available.</p>";
+
+        if (entries_radiobuttons["CACScore"] == "CAC = 0" ) {
+            recommendation += "<p>Coronary calcium score is 0. This result lowers risk assessment.    <br>Consider no statin therapy, unless diabetes, family history of premature cardiovascular disease or smoking are present. </p> ";
         }
         
-        if (entries_radiobuttons["CACscore"] == "CAC = 1-100" ) {
-            recommendation += "Coronary calcium score is 1-100. <br>Based on established guidelines, statin therapy is favored, especially after age 55."
+        if (entries_radiobuttons["CACScore"] == "CAC = 1-100" ) {
+            recommendation += "<p>Coronary calcium score is 1-100. <br>Based on established guidelines, statin therapy is favored, especially after age 55.</p>";
         }
 
-        if ((entries_radiobuttons["CACscore"] == "CAC = 101-400") || (entries_radiobuttons["CACscore"] = "CAC >400"))  {
-            recommendation += "Coronary calcium score is > 100. <br>Treatment recommendations according to established guidelines include use of a high intensity statin."
+        if ((entries_radiobuttons["CACScore"] == "CAC = 101-400") || (entries_radiobuttons["CACScore"] == "CAC >400"))  {
+            recommendation += "<p>Coronary calcium score is > 100. <br>Based on established guidelines, treatment recommendations include use of a high intensity statin.</p>";
         }
     }
     
     recommendation = reportedLipidValues + recommendation
-
 
     //console.log("Lipid primary prevention recommendation is:  " + recommendation);
 
@@ -199,8 +225,8 @@ function metabolicSyndrome (entries_rb, entries_num){
     let counter = 0;
     let rec = ""
 
-    if (((entries_rb["Gender:"] == "Female") && (entries_num["waist"] >= 35)) || 
-    ((entries_rb["Gender:"] == "Male") && (entries_num["waist"] >= 40))){
+    if (((entries_rb["Gender"] == "Female") && (entries_num["waist"] >= 35)) || 
+    ((entries_rb["Gender"] == "Male") && (entries_num["waist"] >= 40))){
         counter += 1 }
 console.log(counter)
     if ((entries_rb["hga1c"] >= 5.7) || (entries_num["fbs"] > 100)) {
@@ -209,13 +235,13 @@ console.log (((entries_num["hga1c"] >= 5.7) || (entries_num["fbs"] > 100)))
 console.log (entries_num["waist"])
 console.log (entries_num["waist"] >= 40)
 console.log (counter)
-    if (entries_num["Systolic BP:"] > 130) {
+    if (entries_num["systolicBp"] > 130) {
         counter += 1 }
 console.log(counter)
-    if (entries_num["Triglycerides:"] > 150) {
+    if (entries_num["trigs"] > 150) {
         counter += 1 }
 console.log(counter)
-    if (((entries_rb["Gender:"] == "Female") && (entries_num["HDL-cholesterol:"] <   50)) ||     ((entries_rb["Gender:"] == "Male") && (entries_num["HDL-cholesterol:"] < 40))) {
+    if (((entries_rb["Gender"] == "Female") && (entries_num["hdlChol"] <   50)) ||     ((entries_rb["Gender"] == "Male") && (entries_num["hdlChol"] < 40))) {
         counter += 1 }
 console.log(counter)
     if (counter >= 3) {
@@ -236,7 +262,7 @@ function pooledCohortEquations (entries_rb, entries_num) {
     
     // next four lines eliminate invalid entries for "race" and "age" parameters
 
-    if (((entries_rb['Race:'] == "Other") || (entries_num["Age:"] < 40)) || (entries_num["Age:"] > 79)) {
+    if (((entries_rb['Race'] == "Other") || (entries_num["Age"] < 40)) || (entries_num["Age"] > 79)) {
         tenYearRisk = -1;  
         return tenYearRisk;
     }
@@ -256,24 +282,24 @@ function pooledCohortEquations (entries_rb, entries_num) {
 
 // get the values of the natural log of variable values
 
-    LnAge = Math.log(entries_num['Age:']);
-    LnTC = Math.log(entries_num['Total cholesterol:']);
-    LnHDL_C = Math.log(entries_num['HDL-cholesterol:']);
+    LnAge = Math.log(entries_num['Age']);
+    LnTC = Math.log(entries_num['tChol']);
+    LnHDL_C = Math.log(entries_num['hdlChol']);
 
-    if (entries_rb["On HTN Meds?"]=="Yes") {
-        enteredSbp = entries_num["Systolic BP:"]
+    if (entries_rb["onHtnMeds"]=="Yes") {
+        enteredSbp = entries_num["systolicBp"]
         LnTreatedSBP = Math.log(enteredSbp);
         LnUntreatedSBP = 0;}
-    else if (entries_rb["On HTN Meds?"]=="No") {
-        enteredSbp = entries_num["Systolic BP:"];
+    else if (entries_rb["onHtnMeds"]=="No") {
+        enteredSbp = entries_num["systolicBp"];
         LnUntreatedSBP = Math.log(enteredSbp)
         LnTreatedSBP = 0};
 
-    if ((entries_rb['Current Smoker?'])=="Yes") {
+    if ((entries_rb['currentSmoker'])=="Yes") {
         Smoker = 1}
     else {Smoker = 0}
 
-    if ((entries_rb['Diabetic?'])=="Yes") {
+    if ((entries_rb['diabetic'])=="Yes") {
         Diabetes = 1}
     else {Diabetes = 0}
 
@@ -304,13 +330,13 @@ function pooledCohortEquations (entries_rb, entries_num) {
 
         // get coefficients for each variable, based on gender, race
 
-    const coeffAge = getCoeffAge(entries_rb['Gender:'], entries_rb['Race:'])
-    const coeffTC = getCoeffTC(entries_rb['Gender:'], entries_rb['Race:']);
-    const coeffHDL_C = getCoeffHDL_C(entries_rb['Gender:'], entries_rb['Race:']);
-    const coeffTreatedSBP = getCoeffTreatedSBP(entries_rb['Gender:'], entries_rb['Race:'], entries_rb["On HTN Meds?"]);
-    const coeffUntreatedSBP = getCoeffUntreatedSBP(entries_rb['Gender:'], entries_rb['Race:'], entries_rb["On HTN Meds?"]);
-    const coeffSmoker = getCoeffSmoker(entries_rb['Gender:'], entries_rb['Race:']);
-    const coeffDiabetes = getCoeffDiabetes(entries_rb['Gender:'], entries_rb['Race:']);
+    const coeffAge = getCoeffAge(entries_rb['Gender'], entries_rb['Race'])
+    const coeffTC = getCoeffTC(entries_rb['Gender'], entries_rb['Race']);
+    const coeffHDL_C = getCoeffHDL_C(entries_rb['Gender'], entries_rb['Race']);
+    const coeffTreatedSBP = getCoeffTreatedSBP(entries_rb['Gender'], entries_rb['Race'], entries_rb["onHtnMeds"]);
+    const coeffUntreatedSBP = getCoeffUntreatedSBP(entries_rb['Gender'], entries_rb['Race'], entries_rb["onHtnMeds"]);
+    const coeffSmoker = getCoeffSmoker(entries_rb['Gender'], entries_rb['Race']);
+    const coeffDiabetes = getCoeffDiabetes(entries_rb['Gender'], entries_rb['Race']);
 
     // console.log("coeffAge:" + coeffAge);
     // console.log("coeffTC:" + coeffTC);
@@ -321,12 +347,12 @@ function pooledCohortEquations (entries_rb, entries_num) {
 
     // get coefficients for each interaction, based on gender and race
 
-    const coeffAgeSquared = getCoeffLnAgeSquared(entries_rb['Gender:'], entries_rb['Race:']);
-    const coeffAgexTC = getCoeffLnAgexLnTC(entries_rb['Gender:'], entries_rb['Race:']);
-    const coeffAgexHDL_C = getCoeffLnAgexLnHDL_C(entries_rb['Gender:'], entries_rb['Race:']);
-    const coeffAgexTreatedSBP = getCoeffLnAgexLnTreatedSBP(entries_rb['Gender:'], entries_rb['Race:'], entries_rb["On HTN Meds?"]);
-    const coeffAgexUntreatedSBP = getCoeffLnAgexLnUntreatedSBP(entries_rb['Gender:'], entries_rb['Race:'], entries_rb["On HTN Meds?"]);
-    const coeffAgexSmoking = getCoeffLnAgexSmoking(entries_rb['Gender:'], entries_rb['Race:']);
+    const coeffAgeSquared = getCoeffLnAgeSquared(entries_rb['Gender'], entries_rb['Race']);
+    const coeffAgexTC = getCoeffLnAgexLnTC(entries_rb['Gender'], entries_rb['Race']);
+    const coeffAgexHDL_C = getCoeffLnAgexLnHDL_C(entries_rb['Gender'], entries_rb['Race']);
+    const coeffAgexTreatedSBP = getCoeffLnAgexLnTreatedSBP(entries_rb['Gender'], entries_rb['Race'], entries_rb["onHtnMeds"]);
+    const coeffAgexUntreatedSBP = getCoeffLnAgexLnUntreatedSBP(entries_rb['Gender'], entries_rb['Race'], entries_rb["onHtnMeds"]);
+    const coeffAgexSmoking = getCoeffLnAgexSmoking(entries_rb['Gender'], entries_rb['Race']);
 
     // console.log("coeffAgeSquared:" + coeffAgeSquared);
     // console.log("coeffAgexTC:" + coeffAgexTC);
@@ -387,8 +413,8 @@ function pooledCohortEquations (entries_rb, entries_num) {
 
 
     // get the values for mean sum and baseline survival
-    let meanSum = getMeanSum(entries_rb['Gender:'], entries_rb['Race:']);
-    let baselineSurvival = getBaselineSurvival(entries_rb['Gender:'], entries_rb['Race:']);
+    let meanSum = getMeanSum(entries_rb['Gender'], entries_rb['Race']);
+    let baselineSurvival = getBaselineSurvival(entries_rb['Gender'], entries_rb['Race']);
     //console.log("retrieved value for Baseline Survival = " + baselineSurvival);
       
     exponent1 = individualSum-meanSum;
@@ -469,7 +495,7 @@ function diabetes(entries_rb, entries_num) {
     let HgA1C = entries_num["hga1c"];
     let ascvd = entries_rb["hxVascularDz"];
     let chf = entries_rb["hxCHF"];
-    let dmPresent = entries_rb["Diabetic?"];
+    let dmPresent = entries_rb["diabetic"];
     let fbs = entries_num["fbs"];
 
     if (chf == "Yes" || ascvd == "Yes") {
@@ -594,7 +620,6 @@ function exerciseAndActivityPrevCare(entries_rb) {
     return rec
 }
 
-
 function hypertension (entries_rb, entries_num) {
     console.log("ENTERED hypertension FUNCTION");
 
@@ -603,11 +628,11 @@ function hypertension (entries_rb, entries_num) {
 
     // If inclusion criteria not met, use Alternate Risk Score
 
-    if ((entries_rb["hxCACScore"] == "Yes") || (entries_rb["hsCRP?"] == "Yes")) {
+    if ((entries_rb["hxCACScore"] == "Yes") || (entries_rb["hsCRP"] == "Yes")) {
         tenYearRisk = localStorage.getItem("RiskTenYears");}
-    else if ((entries_num["Age:"] < 40) || (entries_num["Age:"] > 75)) {
+    else if ((entries_num["Age"] < 40) || (entries_num["Age"] > 79)) {
         tenYearRisk = localStorage.getItem("RiskTenYears");}
-    else if (entries_num["Race:"] == "Other") {
+    else if (entries_num["Race"] == "Other") {
         tenYearRisk = localStorage.getItem("RiskTenYears");}
 
     console.log (tenYearRisk);
@@ -616,30 +641,30 @@ function hypertension (entries_rb, entries_num) {
 
     let rec = "";
 
-    if (entries_rb["Recent BP range:"] == "<120 systolic") {
+    if (entries_rb["recentBpRange"] == "<120 systolic") {
         rec = "<p>Your current level of blood pressure  is classified as <b>normal.</b><br>  Following a healty lifestyle, diet, weight control and exercise will help maintain excellent blood pressure control.</p>"
         console.log(rec);
     }
-    else if (entries_rb["Recent BP range:"] == "120-129/<80") {
+    else if (entries_rb["recentBpRange"] == "120-129/<80") {
         rec = "<p>Your current level of blood pressure  is classified as <b>elevated or borderline.</b></p>  Initial treatment recommendations include weight loss, a heart-healthy diet (DASH or Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet, exercise (including aerobic, isometric resistance and dynamic resistance exercises), and limited alcohol (for men <3 and for women <2 drinks per day)."
         console.log(rec);
     }
     
-    else if (entries_rb["Recent BP range:"] == "130-139/80-89") {
+    else if (entries_rb["recentBpRange"] == "130-139/80-89") {
 
-        if ((tenYearRisk < 10) && ((entries_rb["Diabetic?"] == "Yes" ) || (entries_rb["CKD present?"] == "Yes"))) {
+        if ((tenYearRisk < 10) && ((entries_rb["diabetic"] == "Yes" ) || (entries_rb["ckdPresent"] == "Yes"))) {
             rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension and the estimated 10-year risk of cardiovascular disease is less than 10%.</b></p>  In addition, either diabetes or chronic kidney disease are present.  In adults with hypertension, initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  With Stage 1 hypertension, use of BP-lowering medication is recommended with a BP target of <130/80 mm Hg. "
         }
         else if (tenYearRisk < 10) {
             rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension and the estimated 10-year risk of cardiovascular disease is less than 10%.</b></p>  Non-drug therapy is recommended as the initial treatment.  In adults with hypertension, initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  A blood pressure target of <130/80 mm Hg is recommended. "
         }
-        else if (((tenYearRisk >= 10) || (entries_rb["Diabetic?"] == "Yes" )) || entries_rb["CKD present?"] == "Yes")  {
+        else if (((tenYearRisk >= 10) || (entries_rb["diabetic"] == "Yes" )) || entries_rb["ckdPresent"] == "Yes")  {
             rec = "<p>Your current level of blood pressure  is classified as <b>Stage 1 Hypertension.  In addition, either the estimated 10-year risk of cardiovascular disease is greater than 10%, diabetes is present or there is evidence of chronic kidney disease.</b></p>  Initial recommendations include weight loss, following a heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  With Stage 1 hypertension and increased risk of cardiovascular disease, use of BP-lowering medication is recommended with a BP target of <130/80 mm Hg. "
         }
         console.log(rec);
     }
 
-    else if (entries_rb["Recent BP range:"] == "140+/90+") {
+    else if (entries_rb["recentBpRange"] == "140+/90+") {
         rec = "<p>Your current level of blood pressure  is classified as <b>Stage 2 Hypertension.</b></p>   Initial recommendations include weight loss, heart-healthy diet (DASH or DASH Mediterranean diet), sodium restriction (optimally less than 1500-2200 mg/d), potassium-rich diet with supplements as necessary, exercise including aerobic, isometric resistance (hand-grip), dynamic resistance (weights), and limited alcohol (men <3 and women <2 per day).  With Stage 2 hypertension,treatment should also include BP-lowering medication. A target BP of <130/80 mm Hg is recommended."}
 
     console.log("REC for hypertension is:  " + rec);
@@ -659,8 +684,7 @@ function hypertensionPrevCare (entries_rb, entries_num) {
 
     return rec;
 }
-
-               
+             
 function tenYearRiskAssessment(entries_rb, entries_num) {
     console.log("ENTERED tenYearRiskAssessment FUNCTION");
 
@@ -669,11 +693,11 @@ function tenYearRiskAssessment(entries_rb, entries_num) {
 
     // If inclusion criteria not met, use Alternate Risk Score
 
-    if ((entries_rb["hxCACScore"] == "Yes") || (entries_rb["hsCRP?"] == "Yes")) {
+    if ((entries_rb["hxCACScore"] == "Yes") || (entries_rb["hsCRP"] == "Yes")) {
         ten_year_risk = localStorage.getItem("RiskTenYears");}
-    else if ((entries_num["Age:"] < 40) || (entries_num["Age:"] > 75)) {
+    else if ((entries_num["Age"] < 40) || (entries_num["Age"] > 79)) {
         ten_year_risk = localStorage.getItem("RiskTenYears");}
-    else if (entries_num["Race:"] == "Other") {
+    else if (entries_num["Race"] == "Other") {
         ten_year_risk = localStorage.getItem("RiskTenYears");}
 
     console.log (ten_year_risk);
@@ -695,11 +719,11 @@ function tenYearRiskAssessment(entries_rb, entries_num) {
     if (ten_year_risk < 5) {
         rec = rec + "  This is considered to be <b>low risk</b>.<br>"}
     else if (ten_year_risk >= 5 && ten_year_risk < 7.5) {
-        rec = rec + "  This is considered to be <b>intermediate risk</b>.<br>"}
+        rec = rec + "  This is considered to be <b>borderline risk</b>.<br>"}
     else if (ten_year_risk >= 7.5 && ten_year_risk <= 20) {
-        rec = rec + "  This is considered to be <b>high risk</b>.<br>"}
+        rec = rec + "  This is considered to be <b>intermediate risk</b>.<br>"}
     else if (ten_year_risk > 20) {
-        rec = rec + "  This is considered to be <b>very high risk</b>.<br>"
+        rec = rec + "  This is considered to be <b>high risk</b>.<br>"
     }
 
     let finalRec = rec + "   " + pcRiskAssessmentRec;
@@ -714,25 +738,53 @@ function tenYearRiskAssessment(entries_rb, entries_num) {
     }
 }
 
-function tobaccoUse (entries_rb) {
+function tobaccoUse (entries_rb, entries_num) {
     console.log("ENTERED tobaccoUse FUNCTION");
 
-    let tobaccoUser = (entries_rb["Current smoker?"]);
+    let tobaccoUser = (entries_rb["currentSmoker"]);
+    let smokedPreviously = (entries_rb["priorSmoker"]);
+    let ppd = (entries_num["smokingPpd"]);
+    let smokingDuration = (entries_num["smokingDuration"]);
+    let yearsQuit = (entries_num["yearsQuit"]);
+    let secondHandSmoke = (entries_rb["secondHandSmoke"]);
+
     let rec = "";
 
+    console.log ("New TobaccoUser entry is:  " +  (entries_rb["currentSmoker"]) + tobaccoUser);
+
     if (tobaccoUser == "Yes") {
-        rec = "<p>Since you are a current smoker, there is an opportunity to reduce the risk of future cardiovascular events.  Quitting smoking and other tobacco or nicotine-containing products has immediate and long term benefits to your health.  </p> "
-        rec = rec + pcTobaccoUseRec}
-    else if (tobaccoUser == "No") {
-        rec = "Even though you do not smoke, exposure to smoke or vapors is still harmful.  Avoiding second-hand smoke is strongly recommended."
+        rec = "<p>Since you are a current smoker, there is an opportunity to reduce the risk of future cardiovascular events.  Quitting smoking and other tobacco or nicotine-containing products has immediate and long term benefits to your health. </p> ";
+
+        if (((entries_num["smokingDuration"]) !== "") && ((entries_num["smokingPpd"]) !== "")) {
+            let packYears = smokingDuration * ppd;
+            rec += "<p> You reported a total of " + packYears + " pack-years of smoking.  Between 20 to 40 pack-years is considered moderate use and more than 40 pack-years is considered heavy use.  The risk of stroke or heart attack increases with heavier exposure to cigarette smoke, but quitting at any time decreases the chances of a future cardiovascular event. By one year, quitting reduces the risk of coronary heart disaease by half.</p>";
+
+            rec = rec + "<p>" + pcTobaccoUseRec + "</p>";
+        }
+    }
+
+    else if ((tobaccoUser == "No") &&  (smokedPreviously == "Yes")) {
+ 
+        rec = "<p>Since you are a former smoker, you have already taken the important step in improving your health by quitting.  Smoking cessation dramatically decreases the chances of a future cardiovascular event. By one year, quitting reduces the risk of coronary heart disaease by half." 
+        if (((entries_num["smokingDuration"]) !== "") && ((entries_num["smokingPpd"]) !== "")) {
+            let packYears = smokingDuration * ppd;
+            rec += "<br><br> You reported a total of " + packYears + " pack-years of smoking.  Between 20 to 40 pack-years is considered moderate use and more than 40 pack-years is considered heavy use.  The risk of cardiovascular events like stroke or heart attack increases with heavier exposure to cigarette smoke, but quitting at any time decreases the chances of a future cardiovascular event. By one year, quitting reduces the risk of coronary heart disaease by half.";
+            if (secondHandSmoke == "Yes") {
+                rec += "<br>Even though you are no longer smoking, avoiding second-hand smoke is still very important.";
+            }
+        }
+    }
+
+    else if ((tobaccoUser == "No") &&  (smokedPreviously == "No")) {
+        rec = "Even though you do not smoke, exposure to smoke or vapors is still harmful.  Avoiding second-hand smoke is strongly recommended.";
     }
 
     return rec;
 }
    
-function tobaccoUsePrevCare(entries_rb) {
+function tobaccoUsePrevCare(entries_rb, entries_num) {
 
-    let rec = tobaccoUse (entries_rb)
+    let rec = tobaccoUse (entries_rb, entries_num)
     
     var displayText = document.getElementById("pcTobaccoUseText");
     displayText.innerHTML = pcTobaccoUseText;
@@ -742,13 +794,6 @@ function tobaccoUsePrevCare(entries_rb) {
 
     return rec;
 }
-
-
-
-
-
-
-
 
 function  weightManagement (entries_numerical, entries_radiobuttons) {
     console.log("ENTERED WEIGHT MANAGEMENT FUNCTION");
@@ -860,7 +905,7 @@ function comprehensiveRec(entries_cb, entries_rb, entries_num) {
 
     CholesterolPrevCare(entries_cb, entries_rb, entries_num);
 
-    tobaccoUsePrevCare(entries_rb);
+    tobaccoUsePrevCare(entries_rb, entries_num);
 
     aspirinPrevCare(entries_rb);
 
@@ -909,13 +954,12 @@ function checkIfAlternateCalculatorNeeded(){
 
     console.log("ENTERED checkAlternateRS calculator function")
 
-    //let response_dict_checkboxes = retrieveValuesCheckboxes();
     let response_dict_radiobuttons = retrieveValuesRadiobuttons();
     let response_dict_numerical = retrieveValuesNumericalEntries();
 
     determineRiskScoreCalculator(response_dict_numerical, response_dict_radiobuttons);
 
-    return
+    return;
 }
 
 function determineRiskScoreCalculator(RDnum, RDrb) {
@@ -928,13 +972,13 @@ function determineRiskScoreCalculator(RDnum, RDrb) {
     document.getElementById("confirmButton").style.display = "none";
     document.getElementById("entryButton").style.display = "block";
 
-    if ((RDrb["hxCACScore"] == "Yes") || (RDrb["hsCRP?"] == "Yes")) {
+    if ((RDrb["hxCACScore"] == "Yes") || (RDrb["hsCRP"] == "Yes")) {
         openAlternateCalculatorsPage()}
-    if ((RDnum["Age:"] < 40) || (RDnum["Age:"] > 75)) {
+    if ((RDnum["Age"] < 40) || (RDnum["Age"] > 79)) {
         openAlternateCalculatorsPage()}
-    if (RDnum["Race:"] == "Other") {
+    if (RDrb["Race"] == "Other") {
         openAlternateCalculatorsPage()}
-    return
+    return;
     }
 
 
@@ -977,7 +1021,7 @@ function displaySourceOfRiskScore() {
 
     alternateScore = localStorage.getItem("Selected source");
 
-    if  ((RDrb["hxCACScore"] == "Yes") || (RDrb["hsCRP?"] == "Yes") || (RDnum["Age:"] < 40) || (RDnum["Age:"] > 75) || (RDnum["Race:"] == "Other") ) {
+    if  ((RDrb["hxCACScore"] == "Yes") || (RDrb["hsCRP"] == "Yes") || (RDnum["Age"] < 40) || (RDnum["Age"] > 79) || (RDnum["Race"] == "Other") ) {
         displayedText = alternateScore} 
     else {displayedText = "ACC/AHA ASCVD Risk Score"}
 
@@ -1013,37 +1057,3 @@ function closeApplication() {
         return false;
 }
 
-
-// function applySelectedRiskScore (entries_rb, entries_num){
-
-//         let tenYrRisk;
-        
-//         let source = determineSourceOfRiskScore(entries_num, entries_rb);
-        
-//         if (source == "Alternate calculator") {
-//         tenYrRisk = localStorage.getItem("RiskTenYears");
-//         console.log (tenYrRisk);}
-        
-//         else tenYrRisk = pooledCohortEquations (entries_rb, entries_num);  
-        
-//         return tenYrRisk;
-//         }
-
-
-// function determineSourceOfRiskScore (num, rb) {
-//     console.log ("ENTERED determineSourceofRiskScore function");
-    
-//     let source = ""
-        
-//     if ((rb["hxCACScore"] == "Yes") || (rb["hsCRP?"] == "Yes")) {
-//         source = "Alternate calculator"}
-//     else if ((num["Age:"] < 40) || (num["Age:"] > 75)) {
-//         source = "Alternate calculator"}
-//     else if (rb["Race:"] == "Other") {
-//         source = "Alternate calculator"}
-//     else {
-//         source = "Pooled cohort equations"
-//     }
-//         console.log (source)
-//         return source;
-//     }

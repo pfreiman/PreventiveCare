@@ -129,7 +129,6 @@ function getCoeffTreatedSBP(gender, race, IsHTNTreated) {
             coeffTreatedSBP = coeffAAMaleLnTreatedSBP}
     else {
         coeffTreatedSBP = 0}
-    console.log (coeffTreatedSBP);
     return coeffTreatedSBP;
 }
 

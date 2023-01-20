@@ -8,11 +8,12 @@
         <script src="js/constants.js" defer></script>
         <script src = "js/functions.js" defer></script>
         <script src = "js/textFiles.js" defer></script>
+        <script src = "js/util.js" defer></script>
         <title>Preventive Care Questionaire</title>
 </head>
 <body>
 
-<form id="entryForm">
+<form name="entryForm" id="entryForm">
 <h1>Cardiovascular Risk Assessment Questionnaire</h1>
 
 <p>Thank you for your interest in participating in the Cardiovascular Risk Assessment Clinic!  This important step will help identify risk factors that can lead to cardiovascular disease, especially heart attack and stroke.  
@@ -42,26 +43,29 @@ All recommendations will be based on the best current scientific evidence.  Our 
 
 <h2>General information:</h2>
 
-<p><label for="age">What is your age?</label>
-        <input type="number" id="age" name="Age:"></input>
+<span>* = required entry</span>
+<br><br>
+
+<p><label for="age">What is your age? <sup>*</sup></label>
+        <input type="number" id="age" name="Age" required>
     </p>
-<br>
 
-<p>Gender:</p>
 
-<input type="radio" id="male" name="Gender:" value="Male">
+<p>Gender:<sup>*</sup></p>
+
+<input type="radio" id="male" name="Gender" value="Male" required>
 <label for="male">Male</label><br>
-<input type="radio" id="female" name="Gender:" value="Female">
+<input type="radio" id="female" name="Gender" value="Female">
 <label for="female">Female</label><br>
 <br>
 
-<p>Race/Ethnicity:</p>
+<p>Race/Ethnicity:<sup>*</sup></p>
 
-<input type="radio" id="white" name="Race:" value="White">
+<input type="radio" id="white" name="Race" value="White" required>
 <label for="white">White</label><br>
-<input type="radio" id="africanAmerican" name="Race:" value="African American">
+<input type="radio" id="africanAmerican" name="Race" value="African American">
 <label for="africanAmerican">African-American</label><br>
-<input type="radio" id="otherRacial" name="Race:" value="Other">
+<input type="radio" id="otherRacial" name="Race" value="Other">
 <label for="otherRacial">Other racial background</label><br>
 <br>
 
@@ -174,10 +178,10 @@ All recommendations will be based on the best current scientific evidence.  Our 
 
 <h2>Weight management</h2> 
 
-<p><label for="weight">Enter weight (lbs):</label>
-        <input type="number" id="weight" name="Weight (lbs)"></input></p>
+<p><label for="weight">Enter weight:</label>
+        <input type="number" id="weight" name="weight"></input></p>
 <p><label for="height">Enter height (inches):</label>
-        <input type="number" id="height" name="Height (in)"></input></p>
+        <input type="number" id="height" name="height"></input></p>
 <p><label for="waist">Waist circumference (inches):</label>
         <input type="number" id="waist" name="waist"></input></p>
     
@@ -185,45 +189,45 @@ All recommendations will be based on the best current scientific evidence.  Our 
 
 <h2>Blood pressure management</h2>
 
-<p>Are you taking medications for hypertension(High blood pressure)?</p>
+<p>Are you taking medications for hypertension(High blood pressure)?<sup>*</sup></p>
 
-<input type="radio" id="yes" name="On HTN Meds?" value="Yes">
+<input type="radio" id="yes" name="onHtnMeds" value="Yes" required >
 <label for="yes">Yes</label><br>
-<input type="radio" id="no" name="On HTN Meds?" value="No">
+<input type="radio" id="no" name="onHtnMeds" value="No">
 <label for="no">No</label><br>
 
 
 <p>Recent blood pressure range:</p>
 
-<input type="radio" id="SBP<120" name="Recent BP range:" value="<120 systolic">
+<input type="radio" id="SBP<120" name="recentBpRange" value="<120 systolic">
 <label for="SBP<120">< 120 systolic</label><br>
-<input type="radio" id="SBP120s/80" name="Recent BP range:" value="120-129/<80">
+<input type="radio" id="SBP120s/80" name="recentBpRange" value="120-129/<80">
 <label for="SBP120s/80">120-129/<80</label><br>
-<input type="radio" id="SBP130s/80s" name="Recent BP range:"value="130-139/80-89">
+<input type="radio" id="SBP130s/80s" name="recentBpRange"value="130-139/80-89">
 <label for="SBP130s/80s">130-139/80-89</label><br>
-<input type="radio" id=">140" name="Recent BP range:" value="140+/90+">
+<input type="radio" id=">140" name="recentBpRange" value="140+/90+">
 <label for=">140">>140/>90</label><br>
 <br>
 
-<p><label for="sbp">Enter recent systolic blood pressure (the top number of blood pressure reading):</label>
-        <input type="number" id="sbp" name="Systolic BP:"></input></p>
+<p><label for="sbp">Enter recent systolic blood pressure (the top number of blood pressure reading):<sup>*</sup></label>
+        <input type="number" id="sbp" name="systolicBp" required></input></p>
 
 
 <p>Do you have Chronic Kidney Disease?</p>
 
-<input type="radio" id="yes" name="CKD present?" value="Yes">
+<input type="radio" id="yes" name="ckdPresent" value="Yes">
         <label for="yes">Yes</label></input><br>
-<input type="radio" id="no" name="CKD present?" value="No">
+<input type="radio" id="no" name="ckdPresent" value="No">
 <label for="no">No</label></input><br>      
 
 
 <h2>Diabetes</h2>
 
-<p>Do you have diabetes?</p>
+<p>Do you have diabetes?<sup>*</sup></p>
 
-<input type="radio" id="yes" name="Diabetic?" value="Yes">
+<input type="radio" id="yes" name="diabetic" value="Yes" required>
 <label for="yes">Yes</label><br>
-<input type="radio" id="no" name="Diabetic?" value="No">
+<input type="radio" id="no" name="diabetic" value="No">
 <label for="no">No</label><br>
 
 
@@ -255,14 +259,14 @@ All recommendations will be based on the best current scientific evidence.  Our 
 
 <p>Enter values for:    (if unknown, leave entry blank)</p>
 
-<p><label for="totalChol">Total cholesterol:</label>
-        <input type="number" id="totalChol" name="Total cholesterol:"></input></p>
-<p><label for="ldlChol">LDL-cholesterol:</label>
-        <input type="number" id="ldlChol" name="LDL-cholesterol:"></input></p>
-<p><label for="hdlChol">HDL-cholesterol:</label>
-        <input type="number" id="hdlChol" name="HDL-cholesterol:"></input></p>
+<p><label for="totalChol">Total cholesterol:<sup>*</sup></label>
+        <input type="number" id="totalChol" name="tChol" required></input></p>
+<p><label for="ldlChol">LDL-cholesterol:<sup>*</sup></label>
+        <input type="number" id="ldlChol" name="ldlChol" required></input></p>
+<p><label for="hdlChol">HDL-cholesterol:<sup>*</sup></label>
+        <input type="number" id="hdlChol" name="hdlChol" required></input></p>
 <p><label for="trigs">Triglycerides:</label>
-        <input type="number" id="trigs" name="Triglycerides:"></input></p>
+        <input type="number" id="trigs" name="trigs"></input></p>
 
 <p>Have you ever had a coronary calcium score?</p>
 
@@ -285,31 +289,31 @@ All recommendations will be based on the best current scientific evidence.  Our 
 
 <p>Have you ever had hsCRP measurement?</p>
 
-<input type="radio" id="yes" name="hsCRP?" value="Yes">
+<input type="radio" id="yes" name="hsCRP" value="Yes">
 <label for="yes">Yes</label><br>
-<input type="radio" id="no" name="hsCRP?" value="No">
+<input type="radio" id="no" name="hsCRP" value="No">
 <label for="no">No</label><br>
 <br>
 
 
 <p>Check all of the following that are true:</p>
 
+<input type="checkbox" class="highRiskFactors" id="fhOfASCVD" name="fhOfASCVD" value="FH of premature ASCVD">
+<label for="fhOfASCVD"> Family history of premature cardiovascular disease (Males < age 55, Females < age 65)</label><br><br>
 <input type="checkbox" class="highRiskFactors" id="primaryHyperchol" name="primaryHyperchol" value="Primary hypercholesterolemia with LDL-cholesterol >= 160">
 <label for="primaryHyperchol"> Primary hypercholesterolemia with LDL-cholesterol > 160</label><br>
 <input type="checkbox" class="highRiskFactors" id="hypertriglyceridemia" name="hypertriglyceridemia" value="Persistently elevated triglycerides (>175)">
 <label for="hypertriglyceridemia"> Persistently elevated triglycerides (>175)</label><br>
-<input type="checkbox" class="highRiskFactors" id="hsCRP" name="hsCRP" value="hs-CRP >= 2.0 mg/dl">
+<input type="checkbox" class="highRiskFactors" id="elevatedHsCRP" name="ElevatedHsCRP" value="hs-CRP &ge; 2.0 mg/dl">
 <label for="hsCRP"> hs-CRP value >= 2.0 mg/dl</label><br>
-<input type="checkbox" class="highRiskFactors" id="elevatedLp(a)" name="elevatedLp(a)" value="Lp(a) > 50 mg/dl">
-<label for="elevatedLp(a)"> Lp(a) > 50 mg/dl</label><br>
-<input type="checkbox" class="highRiskFactors" id="elevaed ApoB" name="elevaed ApoB" value="apoB >= 130">
-<label for="elevaed ApoB"> apoB >= 130</label><br>
-<input type="checkbox" class="highRiskFactors" id="fhOfASCVD" name="fhOfASCVD" value="FH of premature ASCVD">
-<label for="fhOfASCVD"> Family history of premature cardiovascular disease (Males < age 55, Females < age 65)</label><br>
+<input type="checkbox" class="highRiskFactors" id="elevatedLpA" name="elevatedLpA" value="Lp(a) > 50 mg/dl">
+<label for="elevatedLpA"> Lp(a) > 50 mg/dl</label><br>
+<input type="checkbox" class="highRiskFactors" id="elevatedApoB" name="elevatedApoB" value="apoB >= 130">
+<label for="elevatedApoB"> apoB >= 130</label><br>
 <input type="checkbox" class="highRiskFactors" id="fhOfFH" name="fhOfFH" value="FH of familial hypercholesterolemia">
 <label for="fhOfFH"> Family history of Familial hypercholesterolemia</label><br>
-<input type="checkbox" class="highRiskFactors" id="ABI<0.9" name="ABI<0.9" value="ABI < 0.9">
-<label for="ABI<0.9"> Ankle-brachial index < 0.9</label><br>
+<input type="checkbox" class="highRiskFactors" id="lowABI" name="lowABI" value="ABI < 0.9">
+<label for="lowABI"> Ankle-brachial index < 0.9</label><br>
 <input type="checkbox" class="highRiskFactors" id="CKD" name="CKD" value="Chronic Kidney Disease">
 <label for="CKD"> Chronic kidney disease</label><br>
 <input type="checkbox" class="highRiskFactors" id="metabolicSyndrome" name="metabolicSyndrome" value="Metabolic Syndrome">
@@ -326,12 +330,11 @@ All recommendations will be based on the best current scientific evidence.  Our 
 
 <h2>Tobacco</h2>
 
+<p>Are you a current smoker?<sup>*</sup></p>
 
-<p>Are you a current smoker?</p>
-
-<input type="radio" id="yes" name="Current smoker?" value="Yes">
+<input type="radio" id="yes" name="currentSmoker" value="Yes" required>
 <label for="yes">Yes</label><br>
-<input type="radio" id="no" name="Current smoker?" value="No">
+<input type="radio" id="no" name="currentSmoker" value="No">
 <label for="no">No</label><br>
 
 
@@ -379,8 +382,11 @@ All recommendations will be based on the best current scientific evidence.  Our 
 <br>
 <br>
 
-<div id="buttonDiv"><button type="button" id="confirmButton" onclick="checkIfAlternateCalculatorNeeded()"
-        >Confirm Entries</button></div>
+<!-- <div id="buttonDiv"><button type="button" id="confirmButton" onclick="return checkIfAlternateCalculatorNeeded()"
+        >Confirm Entries</button></div> -->
+
+<div id="buttonDiv"><button type="button" id="confirmButton" onclick="validateEntries(this.form)" >Confirm Entries</button>
+</div>
 
 <p id="acknowledgeConfirmation"></p>
 <br>
