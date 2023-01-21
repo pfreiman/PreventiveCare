@@ -2,14 +2,8 @@
 
 
 function validateEntries(form){
-    alert("entered validation function");
+    // alert("entered validation function");
     console.log("ENTERED VALIDATEENTRIES FUNCTION *****************");
-
-    // let age = document.forms["entryForm"]["Age"].value;
-    // if (age == "") {
-    //     alert("Age must be filled out");
-    // return false;
-    // }
 
     let age = document.forms["entryForm"]["Age"].value;;
     if (isNaN(age) || age < 5 || age > 100) {
