@@ -55,10 +55,10 @@ function tee (entries_num, entries_rb) {
     if (entries_rb['exercise'] == 'None') {
         tee = bmr * 1.2;
     }
-    if (entries_rb['exercise'] == "1-150 minutes of moderate physical activity") {
+    if (entries_rb['exercise'] == "<150 minutes of moderate physical activity") {
         tee = bmr * 1.375;
     }
-    if ((entries_rb['exercise'] == "More than 75 minutes of vigorous physical activity") || (entries_rb['exercise'] == "More than 150 minutes of moderate physical activity")) {
+    if ((entries_rb['exercise'] == ">75 minutes of vigorous physical activity") || (entries_rb['exercise'] == ">150 minutes of moderate physical activity")) {
         tee = bmr * 1.725;
     }
     tee = Math.round(tee);
