@@ -5,6 +5,12 @@ function validateEntries(form){
     // alert("entered validation function");
     console.log("ENTERED VALIDATEENTRIES FUNCTION *****************");
 
+    // let age = document.forms["entryForm"]["Age"].value;
+    // if (age == "") {
+    //     alert("Age must be filled out");
+    // return false;
+    // }
+
     let age = document.forms["entryForm"]["Age"].value;;
     if (isNaN(age) || age < 5 || age > 100) {
         alert ("Please enter a valid number for age");
@@ -114,7 +120,7 @@ function validateEntries(form){
     return false;
     }
 
-    if ( ( form.diabetic[0].checked == false ) && ( form.diabetic[1].checked == false ) ) {
+    if ( ( form.diabetic[0].checked == false ) && ( form.diabetic[1].checked == false ) && ( form.diabetic[2].checked == false )) {
         alert ( "Please indicate if diabetic" ); 
     return false;
     }
