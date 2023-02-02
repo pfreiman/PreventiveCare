@@ -133,7 +133,7 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
                 highRiskArray.push(" " + (ele[i].value));
             }
         }
-        console.log ( highRiskArray);
+        // console.log ( highRiskArray);
     }
 
     if ((highRiskArray.length) === 0) {
@@ -177,7 +177,7 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
         return recommendation;
     }
     
-    if (((entries_numerical["Age"] >= 40) && entries_numerical["Age"] <= 75) && (((LDL_C >= 70) && (LDL_C < 190) && (entries_radiobuttons["diabetic"] == "No")))) {
+    if ( ( ( (entries_numerical["Age"] >= 40) && (entries_numerical["Age"] <= 75) ) &&  ( (LDL_C >= 70) && (LDL_C < 190) ) ) && ( (entries_radiobuttons["diabetic"] == "No") || (entries_radiobuttons["diabetic"] == "notSure") ) ) {
         recommendation = "<p>With no history of diabetes, age 40-75 and LDL-cholesterol 70-190, the decision to initiate therapy for hyperlipidemia is not clear and further discussion regarding the pros and cons of treatment is advised.  <br>Determining the 10-year risk of cardiovascular disease helps guide further therapeutic suggestions. <br> <br>For you, the estimated 10-year risk of a cardiovascular event is:  " + tenYearRisk + " %. </p> ";
 
         if (tenYearRisk < 5) {
@@ -195,7 +195,7 @@ function lipidPrimaryManagement(entries_checkboxes, entries_radiobuttons, entrie
         }
     }
 
-    if ((((entries_numerical["Age"] >= 40) && entries_numerical["Age"] <= 75) && (((LDL_C >= 70) && (LDL_C < 190) && (entries_radiobuttons["diabetic"] == "No")))) && (entries_radiobuttons["hxCACScore"] == "Yes")) {
+    if ((((entries_numerical["Age"] >= 40) && entries_numerical["Age"] <= 75) && (((LDL_C >= 70) && (LDL_C < 190) && ((entries_radiobuttons["diabetic"] == "No") || (entries_radiobuttons["diabetic"] == "notSure"))  ))) && (entries_radiobuttons["hxCACScore"] == "Yes")) {
 
         recommendation+= "<p> A coronary artery calcium score is available.</p>";
 

@@ -105,7 +105,11 @@ function retrieveValuesNumericalEntries() {
                 RDnumerical[item] = ele[i].value;
             }
         }
-        return RDnumerical;
+
+        console.log("RDnum is:  ");
+        console.log(RDnumerical);
+
+    return RDnumerical;
     }
 
 //   Get textBox entries...
